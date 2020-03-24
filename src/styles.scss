@@ -1,1 +1,91 @@
 /* You can add global styles to this file, and also import other style files */
+
+body{
+    direction: rtl;
+    text-align: right;
+}
+ngb-datepicker.rtl {
+    direction: rtl
+  }
+
+  ngb-datepicker.rtl ngb-datepicker-navigation-select select.custom-select {
+    background-position: left .25rem center
+  }
+
+  ngb-datepicker.rtl .ngb-dp-arrow.right .ngb-dp-navigation-chevron {
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+    margin: 0 0 0 .25rem
+  }
+
+  ngb-datepicker.rtl .ngb-dp-navigation-chevron {
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    margin: 0 .25rem 0 0
+  }
+
+  ngb-datepicker.hebrew .ngb-dp-day {
+    width: 2.75rem;
+    height: 2.75rem;
+    line-height: 1rem
+  }
+
+  ngb-datepicker.hebrew .ngb-dp-weekday {
+    width: 2.75rem
+  }
+
+
+  .info-tooltip {
+    display: inline-block;
+    overflow: hidden;
+    height: 1.575em;
+    transition: all .35s ease-in-out;
+  
+    /* 
+     * the background-color of the pseudo-element:
+     *
+     * first value if not:hover
+     * second value if :hover
+     */
+    background: linear-gradient(transparent 10%, rgba(130, 0, 0, .55)) no-repeat -1px;
+  
+    /* hide the background on the parent */
+    background-position: -1px 0;
+    background-size: 1px;
+  
+    /* hide the pseudo-element text */
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  }
+
+  .info-tooltip:hover {
+    /* show the pseudo-element text */
+    text-shadow: 0 0 0 white;
+  
+    /* show the pseudo-element background */
+    background-position: -1px 100%;
+  }
+
+  .info-tooltip:before {
+    position: absolute;
+  
+    /* get the info-tooltip-text */
+    content: attr(data-tooltip);
+  
+    /* styling */
+    font-size:.75em;
+    padding: .25em .45em;
+    margin: -2em 0 0 -.25em;
+    border-radius: 1em;
+    pointer-events: none;
+  
+    /* hide the pseudo-element text */
+    color: transparent;
+  
+    /* get the background of the parent element */
+    background: inherit;
+    background-size: 102% 90em;
+  
+    /* get the text-shadow of the parent element 
+     * to show the pseudo-element on :hover */
+    text-shadow: inherit;
+  }
