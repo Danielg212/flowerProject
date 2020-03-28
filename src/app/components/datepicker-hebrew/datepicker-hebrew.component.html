@@ -1,16 +1,12 @@
 <div>
 
     <div>
-        <p>
-            אנא בחרי את תאריך הראיה האחרונה:
-        </p>
-
         <ngb-datepicker class="hebrew rtl bg-white" #dp [(ngModel)]="model" (dateSelect)="onDateSelection($event)"
             [displayMonths]="1" [firstDayOfWeek]="7" [dayTemplate]="dt" [dayTemplateData]="dayTemplateData">
         </ngb-datepicker>
 
         <ng-template #dt let-date let-data="data" let-selected="selected" let-currentMonth="currentMonth">
-            <div class="hebrew-day" [class.outside]="date.month !== currentMonth" [class.selected]="selected">
+            <div class="hebrew-day" [class.weekend]="isSightDay(date)" [class.outside]="date.month !== currentMonth" [class.selected]="selected">
                 <div class="gregorian-num">{{ data.gregorian.day + '/' + (data.gregorian.month) }}</div>
                 <div class="hebrew-num">{{ i18n.getDayNumerals(date) }}</div>
             </div>
@@ -22,27 +18,4 @@
         <button class="btn btn-sm btn-outline-primary mr-2" (click)="dp.navigateTo()">חודש נוכחי</button>
     </div>
     <hr />
-  <!--   <div>
-        <img placement="top" ngbTooltip="Tooltip on top" src="assets/svg/question.svg"> 
-
-
-        <div class="date-details">
-            <div data-tooltip="יום הראיה האחרון" class="info-tooltip">יום הראיה: {{ i18n.getDayAriaLabel(model) }}</div>
-        </div>
-        <div class="date-details"> 
-            <div data-tooltip=" באותו תאריך עברי בו החלה הווסת הקודמת, ובאותה עונה." class="info-tooltip"
-                *ngIf="onatHodeshDate">עונת החודש: {{ i18n.getDayAriaLabel(onatHodeshDate) }} </div>
-        </div>
-        <div class="date-details">
-            <div data-tooltip=" שלושים יום לאחר תחילת הווסת הקודמת, באותה עונה בה החלה הווסת הקודמת."
-                class="info-tooltip" *ngIf="onatBenonitDate">עונה בינונית: {{ i18n.getDayAriaLabel(onatBenonitDate) }}
-            </div>
-        </div>
-        <div class="date-details">
-            <div data-tooltip=" אותו הפרש ימים בין הווסתות כמו שהיה בפעם הקודמת, ובאותה עונה של הפעם האחרונה."
-                class="info-tooltip" *ngIf="onatBenonitDate">עונת הפלגה: {{ i18n.getDayAriaLabel(onatBenonitDate) }}
-            </div>
-        </div>
-
-    </div>-->
 </div>
