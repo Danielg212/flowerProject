@@ -3,15 +3,17 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule, NgbCalendar, NgbCalendarHebrew, NgbDatepickerI18n, NgbDatepickerI18nHebrew} from '@ng-bootstrap/ng-bootstrap';
 import { DatepickerHebrewComponent } from './components/datepicker-hebrew/datepicker-hebrew.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AbstinenceDaysCalcComponent } from './components/abstinence-days-calc/abstinence-days-calc.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    DatepickerHebrewComponent
+    DatepickerHebrewComponent,
+    AbstinenceDaysCalcComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +22,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     NgbModule
   ],
-  providers: [],
+  providers: [{provide: NgbCalendar, useClass: NgbCalendarHebrew},
+    {provide: NgbDatepickerI18n, useClass: NgbDatepickerI18nHebrew}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

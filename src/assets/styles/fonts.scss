@@ -1,0 +1,47 @@
+@font-face {
+  font-family: Heebo;
+  font-style: normal;
+  font-weight: 300;
+  src: url("assets/styles/fonts/Heebo-Light.ttf");
+  src: local("Heebo Light"), local("Heebo-Light"),
+    url("assets/styles/fonts/Heebo-Light.ttf?#iefix") format("embedded-opentype"),
+    url("assets/styles/fonts/Heebo-Light.ttf") format("woff2"), 
+    url("assets/styles/fonts/Heebo-Light.ttf") format("woff"),
+    url("assets/styles/fonts/Heebo-Light.ttf") format("truetype"),
+    url("assets/styles/fonts/Heebo-Light.ttf#Heebo") format("svg");
+}
+@font-face {
+  font-family: Heebo;
+  font-style: normal;
+  font-weight: 400;
+  src: url("assets/styles/fonts/Heebo-Regular.ttf");
+  src: local("Heebo"), local("Heebo-Regular"),
+    url("assets/styles/fonts/Heebo-Regular.ttf?#iefix") format("embedded-opentype"),
+    url("assets/styles/fonts/Heebo-Regular.ttf") format("woff2"), 
+    url("assets/styles/fonts/Heebo-Regular.ttf") format("woff"),
+    url("assets/styles/fonts/Heebo-Regular.ttf") format("truetype"),
+    url("assets/styles/fonts/Heebo-Regular.ttf#Heebo") format("svg");
+}
+@font-face {
+  font-family: Heebo;
+  font-style: normal;
+  font-weight: 500;
+  src: url("assets/styles/fonts/Heebo-Medium.ttf");
+  src: local("Heebo Medium"), local("Heebo-Medium"),
+    url("assets/styles/fonts/Heebo-Medium.ttf?#iefix") format("embedded-opentype"),
+    url("assets/styles/fonts/Heebo-Medium.ttf") format("woff2"), 
+    url("assets/styles/fonts/Heebo-Medium.ttf") format("woff"),
+    url("assets/styles/fonts/Heebo-Medium.ttf") format("truetype"),
+    url("assets/styles/fonts/Heebo-Medium.ttf#Heebo") format("svg");
+}
+@font-face {
+    font-family: Heebo;
+    font-style: bold;
+    src: url("assets/styles/fonts/Heebo-Bold.ttf");
+    src: local("Heebo Bold"), local("Heebo-Bold"),
+      url("assets/styles/fonts/Heebo-Bold.ttf?#iefix") format("embedded-opentype"),
+      url("assets/styles/fonts/Heebo-Bold.ttf") format("woff2"), 
+      url("assets/styles/fonts/Heebo-Bold.ttf") format("woff"),
+      url("assets/styles/fonts/Heebo-Bold.ttf") format("truetype"),
+      url("assets/styles/fonts/Heebo-Bold.ttf#Heebo") format("svg");
+  }
