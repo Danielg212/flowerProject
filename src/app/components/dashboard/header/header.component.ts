@@ -17,4 +17,8 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.emitOutput.emit(this.userModel.uid);
   }
+
+  onAvatarClick($event: MouseEvent) {
+    document.body.classList.toggle('fullscreen');
+  }
 }

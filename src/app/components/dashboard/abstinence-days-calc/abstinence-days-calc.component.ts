@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDate, NgbCalendar, NgbDatepickerI18n, NgbDateStruct, NgbCalendarHebrew } from '@ng-bootstrap/ng-bootstrap';
+import {utils} from '../../../utils/Utils';
 
 @Component({
   selector: 'app-abstinence-days-calc',
@@ -23,18 +24,18 @@ export class AbstinenceDaysCalcComponent implements OnInit {
 
   }
   onLastSeenDayChanged(selectedDate: NgbDate) {
-    this.lastSeenDay = selectedDate
-    this.daysToHiglig = []
+    this.lastSeenDay = selectedDate;
+    this.daysToHiglig = [];
     this.daysToHiglig.push(this.lastSeenDay);
     this.daysToHiglig = this.daysToHiglig.slice();
 
   }
 
   onCurrentSeeDayChanged(currentSeeDate: NgbDate) {
-    this.currentSeeDay = currentSeeDate
-    this.onatHodeshDate = this.calendar.getNext(currentSeeDate, 'm', 1)
-    this.onatHodeshDate.day = currentSeeDate.day
-    //check if next month date exist
+    this.currentSeeDay = currentSeeDate;
+    this.onatHodeshDate = this.calendar.getNext(currentSeeDate, 'm', 1);
+    this.onatHodeshDate.day = currentSeeDate.day;
+    // check if next month date exist
     if (!this.calendar.isValid(this.onatHodeshDate)) {
 
     }
@@ -42,18 +43,18 @@ export class AbstinenceDaysCalcComponent implements OnInit {
     // const jsDate = new Date(gregorian.year, gregorian.month, 0);
     // console.log(jsDate)
 
-    this.calcOnatHaflaga(currentSeeDate)
+    this.calcOnatHaflaga(currentSeeDate);
 
 
   }
 
   calcOnatHaflaga(currentSeeDate: NgbDate) {
-    //ona Benonit: currentSeeDate + 29 days = 30 days (including the seen date) 
-    this.onatHodeshDate.day = currentSeeDate.day
-    this.onatBenonitDate = this.calendar.getNext(currentSeeDate, 'd', 29)
+    // ona Benonit: currentSeeDate + 29 days = 30 days (including the seen date)
+    this.onatHodeshDate.day = currentSeeDate.day;
+    this.onatBenonitDate = this.calendar.getNext(currentSeeDate, 'd', 29);
 
-    let currentSeeDateGeorgian = this.NgbCalendarHebrew.toGregorian(currentSeeDate)
-    let lastSeenDayGeorgian = this.NgbCalendarHebrew.toGregorian(this.lastSeenDay)
+    const currentSeeDateGeorgian = this.NgbCalendarHebrew.toGregorian(currentSeeDate);
+    const lastSeenDayGeorgian = this.NgbCalendarHebrew.toGregorian(this.lastSeenDay);
 
     const date1: any = new Date(currentSeeDateGeorgian.year, currentSeeDateGeorgian.month, currentSeeDateGeorgian.day);
     const date2: any = new Date(lastSeenDayGeorgian.year, lastSeenDayGeorgian.month, lastSeenDayGeorgian.day);
@@ -61,8 +62,14 @@ export class AbstinenceDaysCalcComponent implements OnInit {
     const diffTime: number = Math.abs(date2 - date1);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-    //diffDays-1 - includes the currentSeeDate
-    this.onatHflagaDate = this.calendar.getNext(currentSeeDate, 'd', diffDays-1)
+    // diffDays-1 - includes the currentSeeDate
+    this.onatHflagaDate = this.calendar.getNext(currentSeeDate, 'd', diffDays - 1);
   }
 
+   toGergorinDate(dare: any) {
+     const {gregorian} = utils.dayTemplateData(dare);
+     const jsDate = new Date(gregorian.year, gregorian.month - 1 , gregorian.day);
+     return jsDate.toLocaleDateString();
+
+  }
 }

@@ -7,6 +7,7 @@ import {
   NgbDateStruct
 } from '@ng-bootstrap/ng-bootstrap';
 import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
+import {utils, Utils} from '../../../utils/Utils';
 
 
 @Component({
@@ -46,9 +47,7 @@ export class DatepickerHebrewComponent {
   }
 
   dayTemplateData(date: NgbDate) {
-    return {
-      gregorian: (this.calendar as NgbCalendarHebrew).toGregorian(date)
-    };
+    return utils.dayTemplateData(date);
   }
 
   selectToday() {
