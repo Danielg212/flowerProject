@@ -20,23 +20,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public value: UserModel = {};
 
   ngOnInit(): void {
-    const item: any = JSON.parse(localStorage.getItem('dataSource'));
-    console.log('item', item);
-    if ( item == null || Object.keys(item).length === 0 ) {
-      this.activatedRoute.paramMap
-        .pipe(map(() => window.history.state)).subscribe(
-        value1 => {
-          this.value = value1; },
-      );
-
-      localStorage.setItem('dataSource', JSON.stringify({
-        displayName: this.value.displayName,
-        email: this.value.email,
-        photoURL: this.value.photoURL
-      }));
-    } else {
-      this.value = item;
-    }
+    this.auth.userData$.subscribe(
+      value1 =>  this.value = value1
+    );
+ // this.value = this.auth.userData;
 
   }
 

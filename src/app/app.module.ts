@@ -33,7 +33,7 @@ import { HeaderComponent } from './components/dashboard/header/header.component'
     AppRoutingModule,
     NgbModule,
     AngularFireModule.initializeApp(environment.firebase),
-    FontAwesomeModule,
+    // FontAwesomeModule,
     // AngularFireAnalyticsModule,
     // AngularFirestoreModule
   ],

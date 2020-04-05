@@ -19,9 +19,9 @@ export class LoginComponent implements OnInit {
   faGoogle = faGoogle;
 
   constructor(public auth: AuthService, private router: Router) {
-    this.auth.users$.subscribe(value => {
-      this.user = value;
-    });
+    // this.auth.users$.subscribe(value => {
+    //   this.user = value;
+    // });
   }
   ngOnInit(): void {
   }
@@ -38,8 +38,9 @@ export class LoginComponent implements OnInit {
 
   }
 
-  async login() {
-    const x = await this.auth.googleSignIn();
-    this.navigateToDashboard();
+   async login() {
+     await this.auth.googleSignIn().then(value => {
+       this.navigateToDashboard();
+     });
   }
 }

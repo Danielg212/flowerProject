@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
@@ -12,27 +12,63 @@ import {auth} from 'firebase';
 })
 export class AuthService {
   users$: Observable<any>;
+  userData$: Observable<any>;
 
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    private router: Router) {
-    this.users$ = this.afAuth.authState.pipe(
+    private router: Router,
+    public ngZone: NgZone) {
+
+    this.userData$ = this.afAuth.authState.pipe(
       switchMap(user => {
-        console.log('user: ', user);
         if (user) {
-          return this.afs.doc<UserModel>(`users/${user.uid}`).valueChanges();
+          localStorage.setItem('user', JSON.stringify(user));
+          JSON.parse(localStorage.getItem('user'));
+          return of(user);
         } else {
+          localStorage.setItem('user', null);
+          JSON.parse(localStorage.getItem('user'));
           return of(null);
         }
       })
     );
+
+    // this.users$ = this.afAuth.authState.pipe(
+    //   switchMap(user => {
+    //     console.log('user: ', user);
+    //     if (user) {
+    //       this.afs.doc<UserModel>(`users/${user.uid}`).valueChanges();
+    //       return of(user);
+    //     } else {
+    //       return of(null);
+    //     }
+    //   })
+    // );
   }
 
+  // Returns true when user is looged in and email is verified
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return (user !== null && user.emailVerified !== false) ? true : false;
+  }
+
+  // Sign in with Google
   async googleSignIn() {
-    const provider = new auth.GoogleAuthProvider();
-    const cerdential = await this.afAuth.signInWithPopup(provider);
-    return this.updateUserDate(cerdential.user);
+    return await this.AuthLogin(new auth.GoogleAuthProvider());
+  }
+
+  // Auth logic to run auth providers
+  async AuthLogin(provider) {
+    return await this.afAuth.signInWithPopup(provider)
+      .then((result) => {
+        this.ngZone.run(() => {
+          this.router.navigate(['dashboard']);
+        });
+        this.updateUserDate(result.user);
+      }).catch((error) => {
+        window.alert(error);
+      });
   }
 
   private updateUserDate({uid, email, displayName, photoURL}: UserModel) {
@@ -47,7 +83,9 @@ export class AuthService {
   }
 
   async signOut() {
-    await this.afAuth.signOut();
-    return this.router.navigate(['/']);
+    await this.afAuth.signOut().then(() => {
+      localStorage.removeItem('user');
+      this.router.navigate(['/']);
+    });
   }
 }
