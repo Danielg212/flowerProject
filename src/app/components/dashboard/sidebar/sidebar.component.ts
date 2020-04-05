@@ -18,7 +18,7 @@ export class SidebarComponent implements OnInit {
     const ngbDate: NgbDate = new NgbDate(this.now.getFullYear(),
       this.now.getMonth() + 1,
       this.now.getDate());
-    this.today = utils.xxx(ngbDate).hebrewDate;
+    this.today = utils.getHebDay(ngbDate).hebrewDate;
   }
 
   onClose() {

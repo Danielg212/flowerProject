@@ -15,6 +15,7 @@ import { LoginComponent } from './components/authentication/login/login.componen
 import { DashboardComponent } from './components/dashboard/dashboard/dashboard.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HeaderComponent } from './components/dashboard/header/header.component';
+import { SidebarComponent } from './components/dashboard/sidebar/sidebar.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { HeaderComponent } from './components/dashboard/header/header.component'
     AbstinenceDaysCalcComponent,
     LoginComponent,
     DashboardComponent,
-    HeaderComponent
+    HeaderComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

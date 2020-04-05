@@ -120,29 +120,6 @@ span {
   opacity: .9;
 }
 
-button {
-  padding: 12px;
-  font-family: $sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  font-size: 11px;
-  border-radius: 10px;
-  margin: auto;
-  outline: none;
-  display: block;
-  &:hover {
-    background: $pale;
-    color: $white;
-    transition: background-color 1s ease-out;
-  }
-}
-
-.button {
-  margin-top: 3%;
-  background: $white;
-  color: $pink;
-  border: solid 1px $pale;
-}
 
 /* form styling */
 

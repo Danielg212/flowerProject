@@ -1,10 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import './assets/styles/fonts.scss';
+@import "./assets/styles/sidebar";
+$gray: #8E9AAF;
+$lavender: #CBC0D3;
+$lavenderblush: #fff0f5;
+$pale: #EAC7CC;
+$white: #f6f6f6;
 
+$pink: darken($pale, 20%);
 body{
     direction: rtl;
     text-align: right;
-  background: #CBC0D3;
+  background: $lavenderblush;
 }
 ngb-datepicker.rtl {
     direction: rtl
@@ -98,3 +105,27 @@ ngb-datepicker.rtl {
      * to show the pseudo-element on :hover */
     text-shadow: inherit;
   }
+
+
+button {
+  padding: 12px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 11px;
+  border-radius: 10px;
+  margin: auto;
+  outline: none;
+  display: block;
+  &:hover {
+    background: $pale;
+    color: $white;
+    transition: background-color 1s ease-out;
+  }
+}
+
+.button {
+  margin-top: 3%;
+  background: $white;
+  color: $pink;
+  border: solid 1px $pale;
+}
