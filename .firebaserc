@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "flower-add2b": {
+      "hosting": {
+        "flower": [
+          "flower-add2b"
+        ]
+      }
+    }
+  }
+}

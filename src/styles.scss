@@ -4,6 +4,7 @@
 body{
     direction: rtl;
     text-align: right;
+  background: #CBC0D3;
 }
 ngb-datepicker.rtl {
     direction: rtl
@@ -29,7 +30,7 @@ ngb-datepicker.rtl {
     width: 2.75rem;
     height: 2.75rem;
     line-height: 1rem;
-    @media (max-width: 768px) { 
+    @media (max-width: 768px) {
         width: 2.5rem;
         height: 2.5rem;
      }
@@ -37,7 +38,7 @@ ngb-datepicker.rtl {
 
   ngb-datepicker.hebrew .ngb-dp-weekday {
     width: 2.75rem;
-    @media (max-width: 768px) { 
+    @media (max-width: 768px) {
         width: 2.5rem;
      }
   }
@@ -48,19 +49,19 @@ ngb-datepicker.rtl {
     overflow: hidden;
     height: 1.575em;
     transition: all .35s ease-in-out;
-  
-    /* 
+
+    /*
      * the background-color of the pseudo-element:
      *
      * first value if not:hover
      * second value if :hover
      */
     background: linear-gradient(transparent 10%, rgba(130, 0, 0, .55)) no-repeat -1px;
-  
+
     /* hide the background on the parent */
     background-position: -1px 0;
     background-size: 1px;
-  
+
     /* hide the pseudo-element text */
     text-shadow: 0 0 0 rgba(255, 255, 255, 0);
   }
@@ -68,32 +69,32 @@ ngb-datepicker.rtl {
   .info-tooltip:hover {
     /* show the pseudo-element text */
     text-shadow: 0 0 0 white;
-  
+
     /* show the pseudo-element background */
     background-position: -1px 100%;
   }
 
   .info-tooltip:before {
     position: absolute;
-  
+
     /* get the info-tooltip-text */
     content: attr(data-tooltip);
-  
+
     /* styling */
     font-size:.75em;
     padding: .25em .45em;
     margin: -2em 0 0 -.25em;
     border-radius: 1em;
     pointer-events: none;
-  
+
     /* hide the pseudo-element text */
     color: transparent;
-  
+
     /* get the background of the parent element */
     background: inherit;
     background-size: 102% 90em;
-  
-    /* get the text-shadow of the parent element 
+
+    /* get the text-shadow of the parent element
      * to show the pseudo-element on :hover */
     text-shadow: inherit;
   }

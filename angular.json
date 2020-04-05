@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "flower": {
@@ -91,7 +91,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/assets/svg/*" 
+              "src/assets/svg/*"
             ],
             "styles": [
               "src/styles.scss"
@@ -123,8 +123,13 @@
               "devServerTarget": "flower:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
-    }},
+    }
+  },
   "defaultProject": "flower"
 }
