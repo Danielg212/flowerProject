@@ -19,6 +19,6 @@ export class HeaderComponent implements OnInit {
   }
 
   onAvatarClick($event: MouseEvent) {
-    document.body.classList.toggle('fullscreen');
+    document.body.classList.toggle('sidebar-open');
   }
 }

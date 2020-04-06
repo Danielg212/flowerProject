@@ -22,6 +22,6 @@ export class SidebarComponent implements OnInit {
   }
 
   onClose() {
-    document.body.classList.toggle('fullscreen');
+    document.body.classList.remove('sidebar-open');
   }
 }
