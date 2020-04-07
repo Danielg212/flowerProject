@@ -11,21 +11,11 @@ import {loggedIn} from '@angular/fire/auth-guard';
 export class AuthGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router) {
   }
+
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> {
-    return this.auth.users$.pipe(
-      take(1),
-      map(user =>  {
-       return !!user}),
-      tap(loggedIn => {
-        console.log("loggedIn",loggedIn);
-        if (!loggedIn) {
-          console.log('access deniel');
-          this.router.navigate(['/login']);
-        }
-      })
-    );
+    return this.auth.isLoggedIn();
   }
 
 }

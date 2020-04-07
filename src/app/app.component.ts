@@ -14,11 +14,11 @@ export class AppComponent {
 
   constructor(private auth: AuthService, private router: Router) {
     // this.items = firestore.collection('items').valueChanges();
-    // auth.users$.subscribe(value => {
-    //   if (value != null) {
-    //     this.router.navigate(['/dashboard']);
-    //   }
-    // });
+    auth.userData$.subscribe(value => {
+      if (value != null) {
+        this.router.navigate(['/dashboard']);
+      }
+    });
   }
 
   title = 'flower';

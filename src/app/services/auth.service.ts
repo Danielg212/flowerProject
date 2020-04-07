@@ -3,7 +3,7 @@ import {Observable, of} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {Router} from '@angular/router';
-import {switchMap} from 'rxjs/operators';
+import {map, switchMap, take, tap} from 'rxjs/operators';
 import {UserModel} from './User.model';
 import {auth} from 'firebase';
 
@@ -47,10 +47,26 @@ export class AuthService {
     // );
   }
 
+  // // Returns true when user is looged in and email is verified
+  // get isLoggedIn(): boolean {
+  //   const user = JSON.parse(localStorage.getItem('user'));
+  //   return (user !== null && user.emailVerified !== false) ? true : false;
+  // }
+
   // Returns true when user is looged in and email is verified
-  get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user'));
-    return (user !== null && user.emailVerified !== false) ? true : false;
+  isLoggedIn(): Observable<boolean> {
+    return this.userData$.pipe(
+      take(1),
+      map(user => {
+        return !!user;
+      }),
+      tap(loggedIn => {
+        if (!loggedIn) {
+          console.log('access deniel');
+          this.router.navigate(['/']);
+        }
+      })
+    );
   }
 
   // Sign in with Google
