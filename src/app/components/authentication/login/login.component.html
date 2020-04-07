@@ -23,38 +23,43 @@
           <input type="email" placeholder="email">
           <input type="password" placeholder="password">
           <input type="password" placeholder="confirm password">
-          <button class="button submit">create account </button>
+          <button class="button submit">create account</button>
         </form>
       </div>
       <div class="signin" [class.nodisplay]="signin">
-        <h1>התחברי</h1>
+        <div class="d-md-none d-block text-center">
+          <img class="flower smaller" src="https://image.ibb.co/d5X6pn/1357d638624297b.jpg" alt="1357d638624297b"
+               border="10">
+          <h2 class="title"><span>טהרה</span>&<br>פרח</h2>
+          <p class="desc"> המקום האישי <span>שלך</span></p>
+        </div>
+        <h1 class="d-none d-md-block">התחברי</h1>
         <form class="more-padding" autocomplete="off">
-<!--          <input type="text" placeholder="username">-->
-<!--          <input type="password" placeholder="password">-->
-<!--          <div class="checkbox">-->
-<!--            <input type="checkbox" id="remember" /><label for="remember">remember me</label>-->
-<!--          </div>-->
+          <!--          <input type="text" placeholder="username">-->
+          <!--          <input type="password" placeholder="password">-->
+          <!--          <div class="checkbox">-->
+          <!--            <input type="checkbox" id="remember" /><label for="remember">remember me</label>-->
+          <!--          </div>-->
 
-          <button class="button submit" (click)="login()">
+          <button class="button submit btn-lg mt-0" (click)="login()">
             Google login
-            <fa-icon [icon]="faGoogle"></fa-icon></button>
+            <fa-icon [icon]="faGoogle"></fa-icon>
+          </button>
         </form>
       </div>
     </div>
-    <div class="leftbox">
+    <div class="leftbox d-none d-sm-block ">
       <h2 class="title"><span>טהרה</span>&<br>פרח</h2>
       <p class="desc"> המקום האישי <span>שלך</span></p>
       <img class="flower" src="https://preview.ibb.co/jvu2Un/0057c1c1bab51a0.jpg"/>
       <p class="account">יש לך כבר חשבון</p>
       <button class="button" id="signin" (click)="signin = !signin">התחברי</button>
     </div>
-    <div class="rightbox">
-
-
-
+    <div class="rightbox  d-none d-sm-block">
       <h2 class="title"><span>טהרה</span>&<br>פרח</h2>
       <p class="desc"> המקום האישי <span>שלך</span></p>
-      <img class="flower smaller" src="https://image.ibb.co/d5X6pn/1357d638624297b.jpg" alt="1357d638624297b" border="0">
+      <img class="flower smaller" src="https://image.ibb.co/d5X6pn/1357d638624297b.jpg" alt="1357d638624297b"
+           border="0">
       <p class="account">אין לך עדיין חשבון</p>
       <button class="button" id="signup" (click)="signin = !signin">הרשמי</button>
     </div>

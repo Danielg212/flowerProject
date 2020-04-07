@@ -20,6 +20,11 @@ body {
   width: 650px;
   height: 550px;
   position: relative;
+  @media (max-width: 768px) {
+    width: inherit;
+    height: inherit;
+    position: unset;
+  }
 }
 
 .welcome {
@@ -29,7 +34,13 @@ body {
   position: absolute;
   top: 25%;
   border-radius: 5px;
-  box-shadow: 5px 5px 5px rgba(0,0,0,.1);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, .1);
+
+  @media (max-width: 768px) {
+    width: initial;
+    height: initial;
+    position: initial;
+  }
 }
 
 .pinkbox {
@@ -43,10 +54,23 @@ body {
   box-shadow: 2px 0 10px rgba(0,0,0,.1);
   transition: all .5s ease-in-out;
   z-index: 2;
+  @media (max-width: 768px) {
+    text-align: center;
+    padding: 20px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: initial;
+    height: initial;
+    background: #fff0f5;
+    background: -webkit-linear-gradient(to top, #fff0f5, #f4c4f3);
+    background: linear-gradient(to top, #fffeff, #fff0f5);
+  }
 }
 
 .nodisplay {
-  display:none;
+  display: none;
   transition: all .5s ease;
 }
 
@@ -59,6 +83,7 @@ body {
 .leftbox {
   left: -2%;
 }
+
 .rightbox {
   right: -2%;
 }
@@ -84,13 +109,16 @@ h1 {
   font-weight: 300;
   margin-top: 20%;
 }
+
 .desc {
   margin-top: -8px;
 }
+
 .account {
   margin-top: 45%;
   font-size: 10px;
 }
+
 p {
   font-family: $sans-serif;
   font-size: .7em;
@@ -110,6 +138,16 @@ span {
   top: 46%;
   left: 29%;
   opacity: .7;
+  @media (max-width: 768px) {
+    &.smaller{
+      position:unset;
+      width: 180px;
+      height: 200px;
+      border-radius: 50%;
+      border: 2px solid #ffe8f1;
+    }
+
+  }
 }
 
 .smaller {
@@ -129,19 +167,24 @@ form {
   flex-direction: column;
   padding-top: 7px;
 }
-.more-padding{
+
+.more-padding {
   padding-top: 35px;
+
   input {
     padding: 12px;
   }
+
   .submit {
     margin-top: 45px;
   }
 }
+
 .submit {
   margin-top: 25px;
   padding: 12px;
   border-color: $pink;
+
   &:hover {
     background: $lavender;
     border-color: darken($lavender, 5%);
@@ -156,18 +199,21 @@ input {
   border-bottom: 1px solid rgba($white, 0.5);
   padding: 9px;
   margin: 7px;
+
   &::placeholder {
     color: rgba($white, 1);
     letter-spacing: 2px;
     font-size: 1.3em;
     font-weight: 100;
   }
+
   &:focus {
     color: $pink;
     outline: none;
     border-bottom: 1.2px solid rgba($pink, 0.7);
     font-size: 1em;
     transition: .8s all ease;
+
     &::placeholder {
       opacity: 0;
     }
