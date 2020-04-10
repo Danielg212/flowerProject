@@ -72,4 +72,8 @@ export class AbstinenceDaysCalcComponent implements OnInit {
      return jsDate.toLocaleDateString();
 
   }
+
+  scroll(el: HTMLElement) {
+    el.scrollIntoView({behavior: 'smooth'});
+  }
 }

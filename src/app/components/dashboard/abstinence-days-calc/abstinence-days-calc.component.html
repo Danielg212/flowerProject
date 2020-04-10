@@ -3,40 +3,46 @@
 
     <div class="col-md-4 col-12">
       אנא בחרי יום ראיה קודם
-      <app-datepicker-hebrew (dateChange)="onLastSeenDayChanged($event)"></app-datepicker-hebrew>
+      <app-datepicker-hebrew  (dateChange)="onLastSeenDayChanged($event)" (click)="scroll(currentDay)"></app-datepicker-hebrew>
     </div>
-    <div *ngIf="lastSeenDay" class="col-md-4 col-12">
-      יום ראיה נוכחי
-      <app-datepicker-hebrew (dateChange)="onCurrentSeeDayChanged($event)" [markDays]="daysToHiglig">
-      </app-datepicker-hebrew>
+    <div class="col-md-4 col-12" #currentDay>
+      <div *ngIf="lastSeenDay" >
+        יום ראיה נוכחי
+        <app-datepicker-hebrew (dateChange)="onCurrentSeeDayChanged($event)" [markDays]="daysToHiglig" (click)="scroll(summary)">
+        </app-datepicker-hebrew>
+      </div>
     </div>
-    <div *ngIf="currentSeeDay" class="col-md-4 col-12">
-      <!-- <img placement="top" ngbTooltip="Tooltip on top" src="assets/svg/question.svg">  -->
+    <div class="col-md-4 col-12" #summary>
+      <div *ngIf="currentSeeDay" >
+        <!-- <img placement="top" ngbTooltip="Tooltip on top" src="assets/svg/question.svg">  -->
 
 
-      <div class="date-details">
-        <div data-tooltip="יום הראיה האחרון" class="info-tooltip">יום הראיה:
-          {{ i18n.getDayAriaLabel(currentSeeDay) }} - {{toGergorinDate(currentSeeDay)}}</div>
-      </div>
-      <div class="date-details">
-        <div data-tooltip=" באותו תאריך עברי בו החלה הווסת הקודמת, ובאותה עונה." class="info-tooltip">
-          עונת החודש: {{ i18n.getDayAriaLabel(onatHodeshDate) }} - {{toGergorinDate(onatHodeshDate)}} </div>
-      </div>
-      <div class="date-details">
-        <div data-tooltip=" שלושים יום לאחר תחילת הווסת הקודמת, באותה עונה בה החלה הווסת הקודמת."
-             class="info-tooltip">עונה בינונית: {{ i18n.getDayAriaLabel(onatBenonitDate) }} - {{toGergorinDate(onatBenonitDate)}}
+        <div class="date-details">
+          <div data-tooltip="יום הראיה האחרון" class="info-tooltip">יום הראיה:
+            {{ i18n.getDayAriaLabel(currentSeeDay) }} - {{toGergorinDate(currentSeeDay)}}</div>
         </div>
-      </div>
-      <div class="date-details">
-        <div data-tooltip=" אותו הפרש ימים בין הווסתות כמו שהיה בפעם הקודמת, ובאותה עונה של הפעם האחרונה."
-             class="info-tooltip">עונת הפלגה: {{ i18n.getDayAriaLabel(onatHflagaDate) }} - {{toGergorinDate(onatHflagaDate)}}
+        <div class="date-details">
+          <div data-tooltip=" באותו תאריך עברי בו החלה הווסת הקודמת, ובאותה עונה." class="info-tooltip">
+            עונת החודש: {{ i18n.getDayAriaLabel(onatHodeshDate) }} - {{toGergorinDate(onatHodeshDate)}} </div>
         </div>
-      </div>
+        <div class="date-details">
+          <div data-tooltip=" שלושים יום לאחר תחילת הווסת הקודמת, באותה עונה בה החלה הווסת הקודמת."
+               class="info-tooltip">עונה בינונית: {{ i18n.getDayAriaLabel(onatBenonitDate) }}
+            - {{toGergorinDate(onatBenonitDate)}}
+          </div>
+        </div>
+        <div class="date-details">
+          <div data-tooltip=" אותו הפרש ימים בין הווסתות כמו שהיה בפעם הקודמת, ובאותה עונה של הפעם האחרונה."
+               class="info-tooltip">עונת הפלגה: {{ i18n.getDayAriaLabel(onatHflagaDate) }}
+            - {{toGergorinDate(onatHflagaDate)}}
+          </div>
+        </div>
 
-      <div  class="date-details">
-        <button class="button">סמני ביומן </button>
-      </div>
+        <div class="date-details">
+          <button class="button">סמני ביומן</button>
+        </div>
 
+      </div>
     </div>
   </div>
 </div>
