@@ -32,14 +32,16 @@
           </div>
         </div>
         <div class="date-details">
+
           <div data-tooltip=" אותו הפרש ימים בין הווסתות כמו שהיה בפעם הקודמת, ובאותה עונה של הפעם האחרונה."
                class="info-tooltip">עונת הפלגה: {{ i18n.getDayAriaLabel(onatHflagaDate) }}
             - {{toGergorinDate(onatHflagaDate)}}
           </div>
+          <div class="text-danger small"> הפרש ימים של {{diffDays}} יום. </div>
         </div>
 
-        <div class="date-details">
-          <button class="button">סמני ביומן</button>
+        <div>
+          <button class="button">שמרי ביומן</button>
         </div>
 
       </div>

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbDate, NgbCalendar, NgbDatepickerI18n, NgbDateStruct, NgbCalendarHebrew } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {NgbDate, NgbCalendar, NgbDatepickerI18n, NgbDateStruct, NgbCalendarHebrew} from '@ng-bootstrap/ng-bootstrap';
 import {utils} from '../../../utils/Utils';
 
 @Component({
@@ -14,15 +14,18 @@ export class AbstinenceDaysCalcComponent implements OnInit {
   onatHflagaDate: NgbDate | null = null;
   onatBenonitDate: NgbDate | null = null;
   onatHodeshDate: NgbDate | null = null;
+  diffDays: number;
 
   daysToHiglig: Array<NgbDateStruct> = new Array<NgbDateStruct>();
   private NgbCalendarHebrew: any = new NgbCalendarHebrew();
 
-  constructor(private calendar: NgbCalendar, public i18n: NgbDatepickerI18n) { }
+  constructor(private calendar: NgbCalendar, public i18n: NgbDatepickerI18n) {
+  }
 
   ngOnInit(): void {
 
   }
+
   onLastSeenDayChanged(selectedDate: NgbDate) {
     this.lastSeenDay = selectedDate;
     this.daysToHiglig = [];
@@ -56,20 +59,23 @@ export class AbstinenceDaysCalcComponent implements OnInit {
     const currentSeeDateGeorgian = this.NgbCalendarHebrew.toGregorian(currentSeeDate);
     const lastSeenDayGeorgian = this.NgbCalendarHebrew.toGregorian(this.lastSeenDay);
 
-    const date1: any = new Date(currentSeeDateGeorgian.year, currentSeeDateGeorgian.month, currentSeeDateGeorgian.day);
-    const date2: any = new Date(lastSeenDayGeorgian.year, lastSeenDayGeorgian.month, lastSeenDayGeorgian.day);
+    const date1: Date = new Date(currentSeeDateGeorgian.year, currentSeeDateGeorgian.month - 1, currentSeeDateGeorgian.day);
+    const date2: Date = new Date(lastSeenDayGeorgian.year, lastSeenDayGeorgian.month - 1, lastSeenDayGeorgian.day);
 
-    const diffTime: number = Math.abs(date2 - date1);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffTime: number = Math.abs(date2.getTime() - date1.getTime());
 
+    // diffDays + 1 in order contain the hebrew format
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+    this.diffDays = diffDays;
     // diffDays-1 - includes the currentSeeDate
     this.onatHflagaDate = this.calendar.getNext(currentSeeDate, 'd', diffDays - 1);
   }
 
-   toGergorinDate(dare: any) {
-     const {gregorian} = utils.dayTemplateData(dare);
-     const jsDate = new Date(gregorian.year, gregorian.month - 1 , gregorian.day);
-     return jsDate.toLocaleDateString();
+  toGergorinDate(dare: any) {
+    const {gregorian} = utils.dayTemplateData(dare);
+    const jsDate = new Date(gregorian.year, gregorian.month - 1, gregorian.day);
+    return jsDate.toLocaleDateString();
 
   }
 
