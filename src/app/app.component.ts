@@ -12,14 +12,14 @@ import {Router} from '@angular/router';
 export class AppComponent {
   items: Observable<any[]>;
 
-  constructor(private auth: AuthService, private router: Router) {
-    // this.items = firestore.collection('items').valueChanges();
-    auth.userData$.subscribe(value => {
-      if (value != null) {
-        this.router.navigate(['/dashboard']);
-      }
-    });
-  }
+  // constructor(private auth: AuthService, private router: Router) {
+  //   // this.items = firestore.collection('items').valueChanges();
+  //   auth.userData$.subscribe(value => {
+  //     if (value != null) {
+  //       this.router.navigate(['/dashboard']);
+  //     }
+  //   });
+  // }
 
   title = 'flower';
 }

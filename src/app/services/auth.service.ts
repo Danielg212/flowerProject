@@ -5,7 +5,10 @@ import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestor
 import {Router} from '@angular/router';
 import {map, switchMap, take, tap} from 'rxjs/operators';
 import {UserModel} from './User.model';
-import {auth} from 'firebase';
+
+// import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import {auth} from 'firebase/app';
 
 @Injectable({
   providedIn: 'root'
@@ -55,19 +58,24 @@ export class AuthService {
 
   // Returns true when user is looged in and email is verified
   isLoggedIn(): Observable<boolean> {
-    return this.userData$.pipe(
-      take(1),
-      map(user => {
-        return !!user;
-      }),
-      tap(loggedIn => {
-        if (!loggedIn) {
-          console.log('access deniel');
-          this.router.navigate(['/']);
-        }
-      })
-    );
+    return this.afAuth.authState
+      .pipe(
+        take(1),
+        map(user => {
+            return !!user;
+          }, () => {
+            return false;
+          }),
+        tap(loggedIn => {
+            if (!loggedIn) {
+              //  console.log('access deniel');
+              this.router.navigate(['/']);
+            }
+          }
+        ));
   }
+
+
 
   // Sign in with Google
   async googleSignIn() {
@@ -76,15 +84,16 @@ export class AuthService {
 
   // Auth logic to run auth providers
   async AuthLogin(provider) {
-    return await this.afAuth.signInWithPopup(provider)
-      .then((result) => {
-        this.ngZone.run(() => {
-          this.router.navigate(['dashboard']);
-        });
-        this.updateUserDate(result.user);
-      }).catch((error) => {
-        window.alert(error);
-      });
+    return await this.afAuth.setPersistence('local')
+      .then(_ => this.afAuth.signInWithPopup(provider)
+        .then((result) => {
+          this.ngZone.run(() => {
+            this.router.navigate(['dashboard']);
+          });
+          this.updateUserDate(result.user);
+        }).catch((error) => {
+          window.alert(error);
+        }));
   }
 
   private updateUserDate({uid, email, displayName, photoURL}: UserModel) {

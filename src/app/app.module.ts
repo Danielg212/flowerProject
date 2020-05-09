@@ -16,6 +16,7 @@ import { DashboardComponent } from './components/dashboard/dashboard/dashboard.c
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HeaderComponent } from './components/dashboard/header/header.component';
 import { SidebarComponent } from './components/dashboard/sidebar/sidebar.component';
+import {AngularFireAuthGuard} from '@angular/fire/auth-guard';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { SidebarComponent } from './components/dashboard/sidebar/sidebar.compone
     // AngularFireAnalyticsModule,
     // AngularFirestoreModule
   ],
-  providers: [{provide: NgbCalendar, useClass: NgbCalendarHebrew},
+  providers: [AngularFireAuthGuard,
+    {provide: NgbCalendar, useClass: NgbCalendarHebrew},
     {provide: NgbDatepickerI18n, useClass: NgbDatepickerI18nHebrew}],
   bootstrap: [AppComponent]
 })
