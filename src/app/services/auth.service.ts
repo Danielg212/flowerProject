@@ -141,7 +141,7 @@ export class AuthService {
     const washingtonRef = this.afs.collection(`users`).doc(`${this.user.uid}`);
 // Atomically remove a region from the "regions" array field.
     washingtonRef.update({
-      intervalsHistory: FieldValue.arrayRemove('greater_virginia')
+      intervalsHistory: FieldValue.arrayRemove(intervalData)
     });
   }
 

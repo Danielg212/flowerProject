@@ -13,7 +13,7 @@ import {NgbDatepickerI18n} from '@ng-bootstrap/ng-bootstrap';
 })
 export class IntervalsDiaryComponent implements OnInit {
   private itemDoc: AngularFirestoreDocument<UserModel>;
-  item: Observable<UserModel>;
+  item: Observable<UserModel> = null;
 
   constructor(private auth: AuthService, public i18n: NgbDatepickerI18n) {
 
@@ -40,5 +40,6 @@ export class IntervalsDiaryComponent implements OnInit {
   delete($event: MouseEvent, interval: MonthInterval) {
     $event.preventDefault();
     console.log('about to delete', interval);
+    this.auth.removeMonthForIntervalsHistory(interval);
   }
 }
