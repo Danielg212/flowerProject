@@ -1,5 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UserModel} from '../../../services/User.model';
+import { faFlagUsa} from '@fortawesome/free-solid-svg-icons';
+import {faBars} from '@fortawesome/free-solid-svg-icons/faBars';
+
+
 
 @Component({
   selector: 'app-header',
@@ -9,7 +13,10 @@ import {UserModel} from '../../../services/User.model';
 export class HeaderComponent implements OnInit {
   @Input() userModel: UserModel;
   @Output() emitOutput = new EventEmitter<any>()
-  constructor() { }
+
+  faBar = faBars;
+
+constructor() { }
 
   ngOnInit(): void {
   }

@@ -3,17 +3,19 @@
 
     <div class="col-md-4 col-12">
       אנא בחרי יום ראיה קודם
-      <app-datepicker-hebrew  (dateChange)="onLastSeenDayChanged($event)" (click)="scroll(currentDay)"></app-datepicker-hebrew>
+      <app-datepicker-hebrew (dateChange)="onLastSeenDayChanged($event)"
+                             (click)="scroll(currentDay)"></app-datepicker-hebrew>
     </div>
     <div class="col-md-4 col-12" #currentDay>
-      <div *ngIf="lastSeenDay" >
+      <div *ngIf="lastSeenDay">
         יום ראיה נוכחי
-        <app-datepicker-hebrew (dateChange)="onCurrentSeeDayChanged($event)" [markDays]="daysToHiglig" (click)="scroll(summary)">
+        <app-datepicker-hebrew (dateChange)="onCurrentSeeDayChanged($event)" [markDays]="daysToHiglig"
+                               (click)="scroll(summary)">
         </app-datepicker-hebrew>
       </div>
     </div>
     <div class="col-md-4 col-12" #summary>
-      <div *ngIf="currentSeeDay" >
+      <div *ngIf="currentSeeDay">
         <!-- <img placement="top" ngbTooltip="Tooltip on top" src="assets/svg/question.svg">  -->
 
 
@@ -37,12 +39,19 @@
                class="info-tooltip">עונת הפלגה: {{ i18n.getDayAriaLabel(onatHflagaDate) }}
             - {{toGergorinDate(onatHflagaDate)}}
           </div>
-          <div class="text-danger small"> הפרש ימים של {{diffDays}} יום. </div>
+          <div class="text-danger small"> הפרש ימים של {{diffDays}} יום.</div>
         </div>
 
         <div>
-          <button class="button">שמרי ביומן</button>
+          <button (click)="saveDate($event)" class="btn btn-primary" type="button" [attr.disabled]="loading">
+            <ng-container *ngIf="loading">
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              <span class="sr-only">Loading...</span>
+            </ng-container>
+            שמרי ביומן
+          </button>
         </div>
+
 
       </div>
     </div>

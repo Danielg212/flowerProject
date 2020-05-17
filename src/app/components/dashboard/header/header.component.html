@@ -12,10 +12,15 @@
   </div>
   <div class="spacer"></div>
   <div class="user-details d-flex align-items-center">
-    <img class="toggle" (click)="onAvatarClick($event)" [src]="userModel.photoURL" alt="user Image" height="40" width="40">
+    <div class="cursor-pointer" (click)="onAvatarClick($event)">
+      <fa-icon [icon]="faBar" size="1x"></fa-icon>
+    </div>
+
+    <img class="toggle" [src]="userModel.photoURL" alt="user Image" height="40" width="40">
     <div>
       <a class="text-white" [routerLink]="'.'" (click)="logout()">התנתקות</a>
     </div>
+
   </div>
 
   <!-- Split dropright button -->

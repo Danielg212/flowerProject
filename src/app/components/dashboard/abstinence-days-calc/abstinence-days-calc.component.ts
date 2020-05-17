@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {NgbDate, NgbCalendar, NgbDatepickerI18n, NgbDateStruct, NgbCalendarHebrew} from '@ng-bootstrap/ng-bootstrap';
 import {utils} from '../../../utils/Utils';
+import {MonthInterval} from '../../../services/MonthInterval.model';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-abstinence-days-calc',
@@ -8,6 +10,9 @@ import {utils} from '../../../utils/Utils';
   styleUrls: ['./abstinence-days-calc.component.scss']
 })
 export class AbstinenceDaysCalcComponent implements OnInit {
+
+  @Output() saveMonth = new EventEmitter<MonthInterval>();
+
   lastSeenDay: NgbDateStruct;
   currentSeeDay: NgbDateStruct;
 
@@ -15,11 +20,12 @@ export class AbstinenceDaysCalcComponent implements OnInit {
   onatBenonitDate: NgbDate | null = null;
   onatHodeshDate: NgbDate | null = null;
   diffDays: number;
+  loading: boolean;
 
   daysToHiglig: Array<NgbDateStruct> = new Array<NgbDateStruct>();
   private NgbCalendarHebrew: any = new NgbCalendarHebrew();
 
-  constructor(private calendar: NgbCalendar, public i18n: NgbDatepickerI18n) {
+  constructor(private calendar: NgbCalendar, public i18n: NgbDatepickerI18n, private auth: AuthService) {
   }
 
   ngOnInit(): void {
@@ -81,5 +87,28 @@ export class AbstinenceDaysCalcComponent implements OnInit {
 
   scroll(el: HTMLElement) {
     el.scrollIntoView({behavior: 'smooth'});
+  }
+
+  saveDate($event) {
+    this.loading = true;
+    $event.stopPropagation();
+    const selectedMonth: MonthInterval = {
+      lastSeenDay: {...this.lastSeenDay},
+      currentSeeDay: {...this.currentSeeDay},
+      haflagaInterval: {...this.onatHflagaDate},
+      averageInterval: {...this.onatBenonitDate},
+      monthInterval: {...this.onatHodeshDate},
+      diffDays: this.diffDays
+    } as MonthInterval;
+
+
+    this.auth.addMonthForIntervalsHistory(selectedMonth).then(
+      value => {
+        console.log('successfully add the month!');
+      }
+    ).finally(() => this.loading = false);
+
+
+    // this.saveMonth.emit(selectedMonth);
   }
 }

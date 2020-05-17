@@ -17,6 +17,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HeaderComponent } from './components/dashboard/header/header.component';
 import { SidebarComponent } from './components/dashboard/sidebar/sidebar.component';
 import {AngularFireAuthGuard} from '@angular/fire/auth-guard';
+import { IntervalsDiaryComponent } from './components/dashboard/intervals-diary/intervals-diary.component';
+
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import {AngularFireAuthGuard} from '@angular/fire/auth-guard';
     LoginComponent,
     DashboardComponent,
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    IntervalsDiaryComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,7 @@ import {AngularFireAuthGuard} from '@angular/fire/auth-guard';
     AngularFireModule.initializeApp(environment.firebase),
     FontAwesomeModule,
     // AngularFireAnalyticsModule,
-    // AngularFirestoreModule
+    AngularFirestoreModule
   ],
   providers: [AngularFireAuthGuard,
     {provide: NgbCalendar, useClass: NgbCalendarHebrew},

@@ -4,6 +4,8 @@ import {DashboardComponent} from './components/dashboard/dashboard/dashboard.com
 import {LoginComponent} from './components/authentication/login/login.component';
 import {AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo} from '@angular/fire/auth-guard';
 import {map} from 'rxjs/operators';
+import {IntervalsDiaryComponent} from './components/dashboard/intervals-diary/intervals-diary.component';
+import {AbstinenceDaysCalcComponent} from './components/dashboard/abstinence-days-calc/abstinence-days-calc.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
 const redirectLoggedInToDashboard = () => map(user => user ? ['dashboard'] : true);
@@ -23,7 +25,17 @@ const routes: Routes = [
       path: 'dashboard',
       component: DashboardComponent,
       canActivate: [AngularFireAuthGuard],
-      data: {authGuardPipe: redirectUnauthorizedToLogin}
+      data: {authGuardPipe: redirectUnauthorizedToLogin},
+      children: [
+        {
+          path: '', // child route path
+          component: AbstinenceDaysCalcComponent // child route component that the router renders
+        },
+        {
+          path: 'diary',
+          component: IntervalsDiaryComponent,
+        }
+      ]
     }
   ]
 ;

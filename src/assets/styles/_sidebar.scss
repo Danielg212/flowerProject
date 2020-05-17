@@ -1,5 +1,5 @@
 $side_width: 250px;
-$top_nav_width: 24px;
+$top_nav_width: 14px;
 
 aside {
   background: lavender;
@@ -26,8 +26,6 @@ main {
   &.container-fluid {
     background: lavenderblush;
     height: 100%;
-
-    padding-left: 0;
   }
 }
 
