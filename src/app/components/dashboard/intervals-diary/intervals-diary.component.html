@@ -1,0 +1,20 @@
+<div *ngIf="item | async as monthData">
+  <div *ngIf="monthData.intervalsHistory===undefined || !monthData.intervalsHistory.length  ;else other">
+    <div class="text-center"><h1>אין עונות שמורות ביומן</h1></div>
+  </div>
+  <ng-template #other>
+    <div class="card mb-1" *ngFor="let interval of monthData.intervalsHistory">
+      <div class="card-body">
+        <h5 class="card-title"> פרטים עבור יום ראיה: {{translatNGBDate(interval.currentSeeDay)}} </h5>
+        <div class="flex-row">
+          <div> עונת החודש {{translatNGBDate(interval.monthInterval)}}</div>
+          <div> עונה בינונית {{translatNGBDate(interval.averageInterval)}} </div>
+          <div> עונת הפלגה {{translatNGBDate(interval.haflagaInterval)}} </div>
+          <div> יום ראיה אחרון {{translatNGBDate(interval.lastSeenDay)}}</div>
+        </div>
+        <a href="#" class="btn btn-danger" (click)="delete($event,interval)">מחיקה</a>
+      </div>
+    </div>
+  </ng-template>
+
+</div>
