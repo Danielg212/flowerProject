@@ -6,6 +6,7 @@ import {AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo} from '
 import {map} from 'rxjs/operators';
 import {IntervalsDiaryComponent} from './components/dashboard/intervals-diary/intervals-diary.component';
 import {AbstinenceDaysCalcComponent} from './components/dashboard/abstinence-days-calc/abstinence-days-calc.component';
+import {MikvehListComponent} from './components/dashboard/mikveh-list/mikveh-list.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
 const redirectLoggedInToDashboard = () => map(user => user ? ['dashboard'] : true);
@@ -34,6 +35,10 @@ const routes: Routes = [
         {
           path: 'diary',
           component: IntervalsDiaryComponent,
+        },
+        {
+          path: 'mikvehList',
+          component: MikvehListComponent,
         }
       ]
     }

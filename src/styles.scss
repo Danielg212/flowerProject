@@ -104,23 +104,6 @@ ngb-datepicker.rtl {
      * to show the pseudo-element on :hover */
     text-shadow: inherit;
   }
-
-
-button {
-  padding: 12px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  font-size: 11px;
-  border-radius: 10px;
-  margin: auto;
-  outline: none;
-  display: block;
-  &:hover {
-    background: $pale;
-    color: $white;
-    transition: background-color 1s ease-out;
-  }
-}
 .cursor-pointer{
   cursor: pointer;
 }

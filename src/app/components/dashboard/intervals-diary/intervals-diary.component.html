@@ -9,8 +9,8 @@
         <div class="flex-row">
           <div> עונת החודש {{translatNGBDate(interval.monthInterval)}}</div>
           <div> עונה בינונית {{translatNGBDate(interval.averageInterval)}} </div>
-          <div> עונת הפלגה {{translatNGBDate(interval.haflagaInterval)}} </div>
-          <div> יום ראיה אחרון {{translatNGBDate(interval.lastSeenDay)}}</div>
+          <div> עונת הפלגה {{translatNGBDate(interval.haflagaInterval)}} עם הפרש ימים של {{interval.diffDays}} יום </div>
+          <div> יום ראיה קודם {{translatNGBDate(interval.lastSeenDay)}}</div>
         </div>
         <a href="#" class="btn btn-danger" (click)="delete($event,interval)">מחיקה</a>
       </div>

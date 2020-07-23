@@ -18,6 +18,7 @@ import { HeaderComponent } from './components/dashboard/header/header.component'
 import { SidebarComponent } from './components/dashboard/sidebar/sidebar.component';
 import {AngularFireAuthGuard} from '@angular/fire/auth-guard';
 import { IntervalsDiaryComponent } from './components/dashboard/intervals-diary/intervals-diary.component';
+import { MikvehListComponent } from './components/dashboard/mikveh-list/mikveh-list.component';
 
 
 
@@ -30,7 +31,8 @@ import { IntervalsDiaryComponent } from './components/dashboard/intervals-diary/
     DashboardComponent,
     HeaderComponent,
     SidebarComponent,
-    IntervalsDiaryComponent
+    IntervalsDiaryComponent,
+    MikvehListComponent
   ],
   imports: [
     BrowserModule,

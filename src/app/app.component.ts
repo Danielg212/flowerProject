@@ -1,16 +1,23 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {Observable} from 'rxjs';
 import {AuthService} from './services/auth.service';
 import {Router} from '@angular/router';
+import {Title, Meta} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   items: Observable<any[]>;
+  title = 'flower';
+
+
+  constructor(private titleService: Title, private metaService: Meta) {
+
+  }
 
   // constructor(private auth: AuthService, private router: Router) {
   //   // this.items = firestore.collection('items').valueChanges();
@@ -21,5 +28,13 @@ export class AppComponent {
   //   });
   // }
 
-  title = 'flower';
+  ngOnInit() {
+    this.titleService.setTitle(this.title);
+    this.metaService.addTags([
+      {name: 'keywords', content: 'חישוב,פרישה,וסת,מחשבון,טהרה,משפחה,סמוך לוסת'},
+      {name: 'description', content: 'המקום האישי שלך לטהרת המשפחה'},
+      {name: 'robots', content: 'index, follow'}
+    ]);
+  }
+
 }
