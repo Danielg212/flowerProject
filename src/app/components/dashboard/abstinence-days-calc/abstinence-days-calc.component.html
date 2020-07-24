@@ -1,13 +1,17 @@
 <div class="card ">
+
   <div class="row p-2 align-items-center text-center card-body">
 
     <div class="col-md-4 col-12">
+      <app-day-nightpicker [(day)]="isLastSeenNight" [id]="'aaa'"></app-day-nightpicker>
       אנא בחרי יום ראיה קודם
       <app-datepicker-hebrew (dateChange)="onLastSeenDayChanged($event)"
                              (click)="scroll(currentDay)"></app-datepicker-hebrew>
     </div>
     <div class="col-md-4 col-12" #currentDay>
       <div *ngIf="lastSeenDay">
+        <app-day-nightpicker [(day)]="isCurrentSeenNight" [id]="'bbb'"></app-day-nightpicker>
+
         יום ראיה נוכחי
         <app-datepicker-hebrew (dateChange)="onCurrentSeeDayChanged($event)" [markDays]="daysToHiglig"
                                (click)="scroll(summary)">

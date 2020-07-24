@@ -24,4 +24,8 @@ export class SidebarComponent implements OnInit {
   onClose() {
     document.body.classList.remove('sidebar-open');
   }
+
+  closeSideNav() {
+    this.onClose();
+  }
 }

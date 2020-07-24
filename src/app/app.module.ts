@@ -19,6 +19,7 @@ import { SidebarComponent } from './components/dashboard/sidebar/sidebar.compone
 import {AngularFireAuthGuard} from '@angular/fire/auth-guard';
 import { IntervalsDiaryComponent } from './components/dashboard/intervals-diary/intervals-diary.component';
 import { MikvehListComponent } from './components/dashboard/mikveh-list/mikveh-list.component';
+import { DayNightpickerComponent } from './components/dashboard/day-night-picker/day-nightpicker.component';
 
 
 
@@ -32,7 +33,8 @@ import { MikvehListComponent } from './components/dashboard/mikveh-list/mikveh-l
     HeaderComponent,
     SidebarComponent,
     IntervalsDiaryComponent,
-    MikvehListComponent
+    MikvehListComponent,
+    DayNightpickerComponent
   ],
   imports: [
     BrowserModule,

@@ -24,6 +24,9 @@ export class AbstinenceDaysCalcComponent implements OnInit {
 
   daysToHiglig: Array<NgbDateStruct> = new Array<NgbDateStruct>();
   private NgbCalendarHebrew: any = new NgbCalendarHebrew();
+  isLastSeenNight = true;
+  isCurrentSeenNight = false;
+
 
   constructor(private calendar: NgbCalendar, public i18n: NgbDatepickerI18n, private auth: AuthService) {
   }

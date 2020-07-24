@@ -8,12 +8,12 @@
   <div>{{i18n.getDayAriaLabel(today)}}</div>
   <hr>
   <ul class="list-group">
-    <li class="list-item" routerLink="diary">יומן</li>
-    <li class="list-item" routerLink="mikvehList">רשימת מקוואות</li>
-    <li class="list-item">שיעורי תורה</li>
-    <li class="list-item">התראות</li>
-    <li class="list-item">הגדרות</li>
-    <li class="list-item">שאלו את הרב</li>
+    <li (click)="closeSideNav()"  class="list-item" routerLink="diary">יומן</li>
+    <li (click)="closeSideNav()" class="list-item" routerLink="mikvehList">רשימת מקוואות</li>
+    <li (click)="closeSideNav()" class="list-item">שיעורי תורה</li>
+    <li (click)="closeSideNav()" class="list-item">התראות</li>
+    <li (click)="closeSideNav()" class="list-item">הגדרות</li>
+    <li (click)="closeSideNav()" class="list-item">שאלו את הרב</li>
   </ul>
   <div class="blockquote-footer">
     מַה טֹּבוּ אֹהָלֶיךָ יַעֲקֹב מִשְׁכְּנֹתֶיךָ יִשְׂרָאֵל.
