@@ -1,4 +1,3 @@
-
 export interface MonthInterval {
   lastSeenDay: any;
   currentSeeDay: any;
@@ -6,5 +5,7 @@ export interface MonthInterval {
   averageInterval: any;
   monthInterval: any;
   diffDays?: number;
+  isLastSeenNight: boolean;
+  isCurrentSeenNight: boolean;
 
 }

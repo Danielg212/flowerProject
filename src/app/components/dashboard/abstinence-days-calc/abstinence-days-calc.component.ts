@@ -101,7 +101,9 @@ export class AbstinenceDaysCalcComponent implements OnInit {
       haflagaInterval: {...this.onatHflagaDate},
       averageInterval: {...this.onatBenonitDate},
       monthInterval: {...this.onatHodeshDate},
-      diffDays: this.diffDays
+      diffDays: this.diffDays,
+      isLastSeenNight: this.isLastSeenNight,
+      isCurrentSeenNight: this.isCurrentSeenNight
     } as MonthInterval;
 
 
@@ -113,5 +115,9 @@ export class AbstinenceDaysCalcComponent implements OnInit {
 
 
     // this.saveMonth.emit(selectedMonth);
+  }
+
+  getOnaDayTime(): string {
+    return this.isCurrentSeenNight ? 'לילה' : 'יום';
   }
 }

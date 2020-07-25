@@ -20,6 +20,7 @@ import {AngularFireAuthGuard} from '@angular/fire/auth-guard';
 import { IntervalsDiaryComponent } from './components/dashboard/intervals-diary/intervals-diary.component';
 import { MikvehListComponent } from './components/dashboard/mikveh-list/mikveh-list.component';
 import { DayNightpickerComponent } from './components/dashboard/day-night-picker/day-nightpicker.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 
@@ -45,7 +46,8 @@ import { DayNightpickerComponent } from './components/dashboard/day-night-picker
     AngularFireModule.initializeApp(environment.firebase),
     FontAwesomeModule,
     // AngularFireAnalyticsModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [AngularFireAuthGuard,
     {provide: NgbCalendar, useClass: NgbCalendarHebrew},

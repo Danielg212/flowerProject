@@ -5,12 +5,14 @@
   <ng-template #other>
     <div class="card mb-1" *ngFor="let interval of monthData.intervalsHistory">
       <div class="card-body">
-        <h5 class="card-title"> פרטים עבור יום ראיה: {{translatNGBDate(interval.currentSeeDay)}} </h5>
+        <h5 class="card-title"> פרטים עבור יום ראיה: {{translatNGBDate(interval.currentSeeDay)}}
+          <span>- עונת {{getDayTimeStr(interval.isCurrentSeenNight)}} </span>
+        </h5>
         <div class="flex-row">
           <div> עונת החודש {{translatNGBDate(interval.monthInterval)}}</div>
           <div> עונה בינונית {{translatNGBDate(interval.averageInterval)}} </div>
           <div> עונת הפלגה {{translatNGBDate(interval.haflagaInterval)}} עם הפרש ימים של {{interval.diffDays}} יום </div>
-          <div> יום ראיה קודם {{translatNGBDate(interval.lastSeenDay)}}</div>
+          <div> יום ראיה קודם  {{translatNGBDate(interval.lastSeenDay)}} עונת - {{getDayTimeStr(interval.isLastSeenNight)}}</div>
         </div>
         <a href="#" class="btn btn-danger" (click)="delete($event,interval)">מחיקה</a>
       </div>
