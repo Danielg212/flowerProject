@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {AuthService} from './services/auth.service';
 import {Router} from '@angular/router';
 import {Title, Meta} from '@angular/platform-browser';
+import {SwUpdate} from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,7 @@ export class AppComponent implements OnInit {
   title = 'flower';
 
 
-  constructor(private titleService: Title, private metaService: Meta) {
+  constructor(private titleService: Title, private metaService: Meta, private swUpdate: SwUpdate) {
 
   }
 
@@ -29,12 +30,22 @@ export class AppComponent implements OnInit {
   // }
 
   ngOnInit() {
+
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.available.subscribe(() => {
+        if (confirm('New version available. Load New Version?')) {
+          window.location.reload();
+        }
+      });
+    }
     this.titleService.setTitle(this.title);
     this.metaService.addTags([
       {name: 'keywords', content: 'חישוב,פרישה,וסת,מחשבון,טהרה,משפחה,סמוך לוסת'},
       {name: 'description', content: 'המקום האישי שלך לטהרת המשפחה'},
       {name: 'robots', content: 'index, follow'}
     ]);
+
+
   }
 
 }
