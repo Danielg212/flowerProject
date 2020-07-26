@@ -2,6 +2,7 @@ $side_width: 250px;
 $top_nav_width: 14px;
 
 aside {
+  z-index: 10;
   background: lavender;
   position: fixed;
   width: $side_width;
