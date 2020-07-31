@@ -81,10 +81,13 @@ export class AuthService {
         ));
   }
 
-
   // Sign in with Google
-  async googleSignIn() {
-    return await this.AuthLogin(new auth.GoogleAuthProvider());
+  async googleSignIn(isMobile) {
+    if (isMobile) {
+      await this.login(new auth.GoogleAuthProvider());
+    } else {
+      return await this.AuthLogin(new auth.GoogleAuthProvider());
+    }
   }
 
   // Auth logic to run auth providers
@@ -92,14 +95,26 @@ export class AuthService {
     return await this.afAuth.setPersistence('local')
       .then(_ => this.afAuth.signInWithPopup(provider)
         .then((result) => {
-          this.ngZone.run(() => {
-            this.router.navigate(['dashboard']);
-          });
+          this.router.navigate(['dashboard']);
           this.updateUserDate(result.user);
         }).catch((error) => {
-          window.alert(error);
+          console.error(error);
+          alert(error);
         }));
   }
+
+  async login(provider) {
+    await this.afAuth.signInWithRedirect(provider);
+    this.afAuth.getRedirectResult().then(result => {
+      if (result.user) {
+        this.router.navigate(['dashboard']);
+        this.updateUserDate(result.user);
+      }
+    }).catch(reason => {
+      alert(reason.message);
+    });
+  }
+
 
   private updateUserDate({uid, email, displayName, photoURL}: UserModel) {
     const userRef: AngularFirestoreDocument<UserModel> = this.afs.doc(`users/${uid}`);

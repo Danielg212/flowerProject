@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
 
   navigateToDashboard() {
 
-    this.router.navigateByUrl('/dashboard', {state: this.user});
+    // this.router.navigateByUrl('/dashboard', {state: this.user});
   }
 
   logout() {
@@ -38,8 +38,12 @@ export class LoginComponent implements OnInit {
 
   }
 
+  get isMobile(): boolean {
+    return window.innerWidth <= 576;
+  }
+
    async login() {
-     await this.auth.googleSignIn().then(value => {
+     await this.auth.googleSignIn(this.isMobile).then(value => {
        this.navigateToDashboard();
      });
   }
