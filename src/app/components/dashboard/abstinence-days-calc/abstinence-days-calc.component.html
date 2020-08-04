@@ -11,7 +11,7 @@
                              (click)="scroll(currentDay)"></app-datepicker-hebrew>
     </div>
     <div class="col-md-4 col-12" #currentDay>
-      <div *ngIf="lastSeen.seenDay">
+      <div >
         אנא סמני את זמן הראיה
         <app-day-nightpicker [(day)]="currentSeen.isSeenNight" [id]="'bbb'"
                              (change)="genericOnChange(currentSeen);onCurrentSeeDayChanged(currentSeen.seenDay);"></app-day-nightpicker>

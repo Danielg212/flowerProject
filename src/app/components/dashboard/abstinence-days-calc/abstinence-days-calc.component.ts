@@ -29,6 +29,8 @@ export class AbstinenceDaysCalcComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.onLastSeenDayChanged( this.lastSeen.seenDay);
+    this.onCurrentSeeDayChanged(this.currentSeen.seenDay);
   }
 
   onLastSeenDayChanged(selectedDate: NgbDate) {
@@ -36,6 +38,7 @@ export class AbstinenceDaysCalcComponent implements OnInit {
     this.daysToHiglig = [];
     this.daysToHiglig.push(this.lastSeen.seenDay);
     this.daysToHiglig = this.daysToHiglig.slice();
+    this.onCurrentSeeDayChanged(this.currentSeen.seenDay);
 
   }
 
