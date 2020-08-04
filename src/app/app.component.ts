@@ -1,9 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {AuthService} from './services/auth.service';
-import {Router} from '@angular/router';
-import {Title, Meta} from '@angular/platform-browser';
+import {Meta, Title} from '@angular/platform-browser';
 import {SwUpdate} from '@angular/service-worker';
 
 @Component({
@@ -11,12 +8,15 @@ import {SwUpdate} from '@angular/service-worker';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   items: Observable<any[]>;
   title = 'flower';
+  updateAvailable = false;
 
 
-  constructor(private titleService: Title, private metaService: Meta, private swUpdate: SwUpdate) {
+  constructor(private titleService: Title, private metaService: Meta, private updates: SwUpdate) {
+    // this.updateClient();
+    // this.updates.checkForUpdate();
 
   }
 
@@ -30,14 +30,6 @@ export class AppComponent implements OnInit {
   // }
 
   ngOnInit() {
-
-    if (this.swUpdate.isEnabled) {
-      this.swUpdate.available.subscribe(() => {
-        if (confirm('New version available. Load New Version?')) {
-          window.location.reload();
-        }
-      });
-    }
     this.titleService.setTitle(this.title);
     this.metaService.addTags([
       {name: 'keywords', content: 'חישוב,פרישה,וסת,מחשבון,טהרה,משפחה,סמוך לוסת'},
@@ -46,6 +38,39 @@ export class AppComponent implements OnInit {
     ]);
 
 
+  }
+
+  updateClient() {
+    if (!this.updates.isEnabled) {
+      console.log('Not Enable');
+      return;
+    }
+    this.updates.available.subscribe((event) => {
+      console.log('current', event.current, 'available', event.available);
+      if (confirm('New version available. Load New Version?')) {
+        this.updates.activateUpdate().then(() => location.reload());
+      }
+    });
+
+    this.updates.activated.subscribe((event) => {
+      console.log('previous', event.previous, 'available', event.current);
+    });
+
+  }
+
+  ngAfterViewInit() {
+    if (this.updates.isEnabled) {
+      this.updates.available
+        .subscribe(() => {
+          if (confirm('New version available. Load New Version?')) {
+            this.updates
+              .activateUpdate()
+              .then(() => {
+                window.location.reload();
+              });
+          }
+        });
+    }
   }
 
 }

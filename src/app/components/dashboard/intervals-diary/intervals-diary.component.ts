@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../services/auth.service';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {MonthInterval} from '../../../services/MonthInterval.model';
 import {AngularFirestoreDocument} from '@angular/fire/firestore';
 import {UserModel} from '../../../services/User.model';
@@ -17,6 +17,7 @@ import {utils} from '../../../utils/Utils';
 export class IntervalsDiaryComponent implements OnInit {
   private itemDoc: AngularFirestoreDocument<UserModel>;
   item: Observable<UserModel> = null;
+  // public test: Observable<any[]>;
 
   constructor(private auth: AuthService, public i18n: NgbDatepickerI18n) {
     // this.itemDoc = auth.getUserIntervalsHistory();
@@ -25,13 +26,9 @@ export class IntervalsDiaryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.test = this.auth.getItems();
     this.itemDoc = this.auth.getUserIntervalsHistory();
     this.item = this.itemDoc.valueChanges();
-//     this.auth.userData$.subscribe(
-//       value1 => {
-//         console.log(value1.intervalHistory);
-//       }
-//     );
 
   }
 

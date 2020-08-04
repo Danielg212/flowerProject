@@ -3,42 +3,50 @@
   <div class="row  align-items-center text-center card-body">
 
     <div class="col-md-4 col-12">
-      <app-day-nightpicker [(day)]="isLastSeenNight" [id]="'aaa'"></app-day-nightpicker>
-      אנא בחרי יום ראיה קודם
-      <app-datepicker-hebrew (dateChange)="onLastSeenDayChanged($event)"
+      אנא סמני את זמן הראיה
+      <app-day-nightpicker [(day)]="lastSeen.isSeenNight" [id]="'aaa'"
+                           (change)="genericOnChange(lastSeen);onLastSeenDayChanged(lastSeen.seenDay);"></app-day-nightpicker>
+      אנא סמני את יום הראיה בפעם הקודמת
+      <app-datepicker-hebrew [model]="lastSeen.seenDay" (dateChange)="onLastSeenDayChanged($event)"
                              (click)="scroll(currentDay)"></app-datepicker-hebrew>
     </div>
     <div class="col-md-4 col-12" #currentDay>
-      <div *ngIf="lastSeenDay">
-        <app-day-nightpicker [(day)]="isCurrentSeenNight" [id]="'bbb'"></app-day-nightpicker>
+      <div *ngIf="lastSeen.seenDay">
+        אנא סמני את זמן הראיה
+        <app-day-nightpicker [(day)]="currentSeen.isSeenNight" [id]="'bbb'"
+                             (change)="genericOnChange(currentSeen);onCurrentSeeDayChanged(currentSeen.seenDay);"></app-day-nightpicker>
 
-        יום ראיה נוכחי
-        <app-datepicker-hebrew (dateChange)="onCurrentSeeDayChanged($event)" [markDays]="daysToHiglig"
+        אנא סמני את יום הראיה בפעם הנוכחית
+        <app-datepicker-hebrew [model]="currentSeen.seenDay" (dateChange)="onCurrentSeeDayChanged($event)"
+                               [markDays]="daysToHiglig"
                                (click)="scroll(summary)">
         </app-datepicker-hebrew>
       </div>
     </div>
     <div class="col-md-4 col-12" #summary>
-      <div *ngIf="currentSeeDay">
+      <div *ngIf="currentSeen.seenDay">
         <!-- <img placement="top" ngbTooltip="Tooltip on top" src="assets/svg/question.svg">  -->
-
 
         <div class="date-details">
           <div data-tooltip="יום הראיה האחרון" class="info-tooltip">יום הראיה:
-            {{ i18n.getDayAriaLabel(currentSeeDay) }} - {{toGergorinDate(currentSeeDay)}}</div>
+            {{ i18n.getDayAriaLabel(currentSeen.seenDay) }} - {{toGergorinDate(currentSeen.seenDay)}}</div>
         </div>
+
+        <h4>החששות לחודש הבא:</h4>
+
+        <div class="date-details">
+          <div data-tooltip=" שלושים יום לאחר תחילת הווסת הקודמת, באותה עונה בה החלה הווסת הקודמת."
+               class="info-tooltip">עונה בינונית: {{ i18n.getDayAriaLabel(onatBenonitDate) }}
+            - {{toGergorinDate(onatBenonitDate)}}
+            <div class="text-info small"> עונת יום ולילה</div>
+          </div>
+        </div>
+
         <div class="date-details">
           <div data-tooltip=" באותו תאריך עברי בו החלה הווסת הקודמת, ובאותה עונה." class="info-tooltip">
             עונת החודש: {{ i18n.getDayAriaLabel(onatHodeshDate) }} - {{toGergorinDate(onatHodeshDate)}} </div>
           <div class="text-info small"> עונת {{getOnaDayTime()}} </div>
 
-        </div>
-        <div class="date-details">
-          <div data-tooltip=" שלושים יום לאחר תחילת הווסת הקודמת, באותה עונה בה החלה הווסת הקודמת."
-               class="info-tooltip">עונה בינונית: {{ i18n.getDayAriaLabel(onatBenonitDate) }}
-            - {{toGergorinDate(onatBenonitDate)}}
-            <div class="text-info small"> עונת יום ולילה (עונת ״כרתי ופלטי״) </div>
-          </div>
         </div>
         <div class="date-details">
 
@@ -47,17 +55,18 @@
             - {{toGergorinDate(onatHflagaDate)}}
           </div>
           <div class="text-info small"> עונת {{getOnaDayTime()}} </div>
-          <div class="text-danger small"> הפרש ימים של {{diffDays}} יום.</div>
+          <div class="text-danger small"> הפרש ימים של {{diffDays - 1}} יום.</div>
 
         </div>
 
         <div>
-          <button (click)="saveDate($event)" class="btn btn-primary" type="button" [attr.disabled]="loading">
+          <button #btn (click)="saveDate($event)" class="btn btn-primary" type="button" [attr.disabled]="loading">
             <ng-container *ngIf="loading">
               <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              <span class="sr-only">Loading...</span>
+              <span class="sr-only">שומר...</span>
             </ng-container>
-            שמרי ביומן
+            <ng-container *ngIf="!loading &&btn.hasAttribute('disabled');else save">נשמר! 🎉 </ng-container>
+            <ng-template #save>שמרי</ng-template>
           </button>
         </div>
 
@@ -67,8 +76,8 @@
   </div>
 
   <div class=" p-2 align-items-center text-center card-body">
-  <h3>שימי לב! בכל אחת מהעונות יש חיוב לבצע
-    <a target="_blank" href="https://www.yoatzot.org/hebrew/197/3183/">בדיקה הלכתית</a>
-  </h3>
+    <h3>שימי לב! בכל אחת מהעונות יש חיוב הלכתי לבצע
+      <a target="_blank" href="https://www.yoatzot.org/hebrew/197/3183/">בדיקה הלכתית</a>
+    </h3>
   </div>
 </div>

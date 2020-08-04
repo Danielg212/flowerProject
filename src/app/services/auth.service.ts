@@ -161,7 +161,12 @@ export class AuthService {
 
   getUserIntervalsHistory() {
     const user = JSON.parse(localStorage.getItem('user')) as UserModel;
-    return this.afs.collection(`users`).doc<UserModel>(`${user.uid}`);
-    // todo OR(same) - return this.afs.doc<UserModel>(`users/${user.uid}`).valueChanges();
+    return this.afs.doc<UserModel>('users/' + user.uid);
+    // this.groceryItemsDoc = this.afs.doc<UserModel>('users/' + user.uid);
+    // this.groceryItems = this.groceryItemsDoc.collection<GroceryItem>('GroceryItems').valueChanges();
+  }
+
+  getItems(): Observable<any[]> {
+    return this.afs.collection('items').valueChanges();
   }
 }

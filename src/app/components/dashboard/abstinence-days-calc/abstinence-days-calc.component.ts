@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {NgbDate, NgbCalendar, NgbDatepickerI18n, NgbDateStruct, NgbCalendarHebrew} from '@ng-bootstrap/ng-bootstrap';
+import {NgbCalendar, NgbCalendarHebrew, NgbDate, NgbDatepickerI18n, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {utils} from '../../../utils/Utils';
 import {MonthInterval} from '../../../services/MonthInterval.model';
 import {AuthService} from '../../../services/auth.service';
@@ -13,9 +13,6 @@ export class AbstinenceDaysCalcComponent implements OnInit {
 
   @Output() saveMonth = new EventEmitter<MonthInterval>();
 
-  lastSeenDay: NgbDateStruct;
-  currentSeeDay: NgbDateStruct;
-
   onatHflagaDate: NgbDate | null = null;
   onatBenonitDate: NgbDate | null = null;
   onatHodeshDate: NgbDate | null = null;
@@ -24,27 +21,26 @@ export class AbstinenceDaysCalcComponent implements OnInit {
 
   daysToHiglig: Array<NgbDateStruct> = new Array<NgbDateStruct>();
   private NgbCalendarHebrew: any = new NgbCalendarHebrew();
-  isLastSeenNight = true;
-  isCurrentSeenNight = false;
 
+  lastSeen: any = {isSeenNight: false, seenDay: undefined};
+  currentSeen: any = {isSeenNight: false, seenDay: undefined};
 
   constructor(private calendar: NgbCalendar, public i18n: NgbDatepickerI18n, private auth: AuthService) {
   }
 
   ngOnInit(): void {
-
   }
 
   onLastSeenDayChanged(selectedDate: NgbDate) {
-    this.lastSeenDay = selectedDate;
+    this.lastSeen.seenDay = selectedDate;
     this.daysToHiglig = [];
-    this.daysToHiglig.push(this.lastSeenDay);
+    this.daysToHiglig.push(this.lastSeen.seenDay);
     this.daysToHiglig = this.daysToHiglig.slice();
 
   }
 
   onCurrentSeeDayChanged(currentSeeDate: NgbDate) {
-    this.currentSeeDay = currentSeeDate;
+    this.currentSeen.seenDay = currentSeeDate;
     this.onatHodeshDate = this.calendar.getNext(currentSeeDate, 'm', 1);
     this.onatHodeshDate.day = currentSeeDate.day;
     // check if next month date exist
@@ -66,7 +62,7 @@ export class AbstinenceDaysCalcComponent implements OnInit {
     this.onatBenonitDate = this.calendar.getNext(currentSeeDate, 'd', 29);
 
     const currentSeeDateGeorgian = this.NgbCalendarHebrew.toGregorian(currentSeeDate);
-    const lastSeenDayGeorgian = this.NgbCalendarHebrew.toGregorian(this.lastSeenDay);
+    const lastSeenDayGeorgian = this.NgbCalendarHebrew.toGregorian(this.lastSeen.seenDay);
 
     const date1: Date = new Date(currentSeeDateGeorgian.year, currentSeeDateGeorgian.month - 1, currentSeeDateGeorgian.day);
     const date2: Date = new Date(lastSeenDayGeorgian.year, lastSeenDayGeorgian.month - 1, lastSeenDayGeorgian.day);
@@ -96,14 +92,14 @@ export class AbstinenceDaysCalcComponent implements OnInit {
     this.loading = true;
     $event.stopPropagation();
     const selectedMonth: MonthInterval = {
-      lastSeenDay: {...this.lastSeenDay},
-      currentSeeDay: {...this.currentSeeDay},
+      lastSeenDay: {...this.lastSeen.seenDay},
+      currentSeeDay: {...this.currentSeen.seenDay},
       haflagaInterval: {...this.onatHflagaDate},
       averageInterval: {...this.onatBenonitDate},
       monthInterval: {...this.onatHodeshDate},
-      diffDays: this.diffDays,
-      isLastSeenNight: this.isLastSeenNight,
-      isCurrentSeenNight: this.isCurrentSeenNight
+      diffDays: this.diffDays - 1,
+      isLastSeenNight: {...this.lastSeen.isSeenNight},
+      isCurrentSeenNight: {...this.currentSeen.isSeenNight}
     } as MonthInterval;
 
 
@@ -118,6 +114,25 @@ export class AbstinenceDaysCalcComponent implements OnInit {
   }
 
   getOnaDayTime(): string {
-    return this.isCurrentSeenNight ? 'לילה' : 'יום';
+    return this.currentSeen.isSeenNight ? 'לילה' : 'יום';
+  }
+
+  // aaa = () => {
+  //   if (this.isLastSeenNight) {
+  //     // this.lastSeenDay = this.calendar.getNext(NgbDate.from(this.lastSeenDay), 'd', 1);
+  //   } else {
+  //     // this.lastSeenDay = this.calendar.getNext(NgbDate.from(this.lastSeenDay), 'd', -1);
+  //   }
+  //
+  // }
+
+  genericOnChange(chk: any) {
+    if (chk.isSeenNight) {
+      chk.seenDay = this.calendar.getNext(NgbDate.from(chk.seenDay), 'd', 1);
+    } else {
+      chk.seenDay = this.calendar.getNext(NgbDate.from(chk.seenDay), 'd', -1);
+
+    }
+
   }
 }
