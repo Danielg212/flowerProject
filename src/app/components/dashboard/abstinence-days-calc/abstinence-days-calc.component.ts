@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {NgbCalendar, NgbCalendarHebrew, NgbDate, NgbDatepickerI18n, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {utils} from '../../../utils/Utils';
-import {MonthInterval} from '../../../services/MonthInterval.model';
+import {MonthInterval, PeriodDay} from '../../../services/MonthInterval.model';
 import {AuthService} from '../../../services/auth.service';
 
 @Component({
@@ -22,8 +22,8 @@ export class AbstinenceDaysCalcComponent implements OnInit {
   daysToHiglig: Array<NgbDateStruct> = new Array<NgbDateStruct>();
   private NgbCalendarHebrew: any = new NgbCalendarHebrew();
 
-  lastSeen: any = {isSeenNight: false, seenDay: undefined};
-  currentSeen: any = {isSeenNight: false, seenDay: undefined};
+  lastSeen: PeriodDay = {isSeenNight: false, seenDay: this.calendar.getToday()};
+  currentSeen: PeriodDay = {isSeenNight: false, seenDay: this.calendar.getToday()};
 
   constructor(private calendar: NgbCalendar, public i18n: NgbDatepickerI18n, private auth: AuthService) {
   }
@@ -98,8 +98,8 @@ export class AbstinenceDaysCalcComponent implements OnInit {
       averageInterval: {...this.onatBenonitDate},
       monthInterval: {...this.onatHodeshDate},
       diffDays: this.diffDays - 1,
-      isLastSeenNight: {...this.lastSeen.isSeenNight},
-      isCurrentSeenNight: {...this.currentSeen.isSeenNight}
+      isLastSeenNight: this.lastSeen.isSeenNight,
+      isCurrentSeenNight: this.currentSeen.isSeenNight
     } as MonthInterval;
 
 

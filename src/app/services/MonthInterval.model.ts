@@ -1,3 +1,5 @@
+import {NgbDate} from '@ng-bootstrap/ng-bootstrap';
+
 export interface MonthInterval {
   lastSeenDay: any;
   currentSeeDay: any;
@@ -8,4 +10,9 @@ export interface MonthInterval {
   isLastSeenNight: boolean;
   isCurrentSeenNight: boolean;
 
+}
+
+export interface PeriodDay {
+  isSeenNight: boolean;
+  seenDay: NgbDate;
 }
