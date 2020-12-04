@@ -159,9 +159,9 @@ export class AuthService {
     });
   }
 
-  getUserIntervalsHistory() {
+  getUserIntervalsHistory(): AngularFirestoreDocument<UserModel> {
     const user = JSON.parse(localStorage.getItem('user')) as UserModel;
-    return this.afs.doc<UserModel>('users/' + user.uid);
+    return this.afs.collection<UserModel>('users').doc(user.uid);
     // this.groceryItemsDoc = this.afs.doc<UserModel>('users/' + user.uid);
     // this.groceryItems = this.groceryItemsDoc.collection<GroceryItem>('GroceryItems').valueChanges();
   }

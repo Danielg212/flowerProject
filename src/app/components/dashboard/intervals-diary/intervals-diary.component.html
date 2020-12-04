@@ -14,11 +14,14 @@
           <div> עונת הפלגה {{translatNGBDate(interval.haflagaInterval)}} עם הפרש ימים של {{interval.diffDays}} יום </div>
           <div> יום ראיה קודם  {{translatNGBDate(interval.lastSeenDay)}} עונת - {{getDayTimeStr(interval.isLastSeenNight)}}</div>
         </div>
-        <a href="#" class="btn btn-danger" (click)="delete($event,interval)">מחיקה</a>
+        <div class="d-flex justify-content-around justify-content-sm-end">
+          <div class="ml-2"><a href="#" class="btn btn-info">עריכה</a></div>
+          <div class="ml-2"><a href="#" class="btn btn-danger" (click)="openModal($event,content,interval)">מחיקה</a>
+          </div>
+        </div>
       </div>
     </div>
   </ng-template>
-
 
 </div>
 <!--<ul>-->
@@ -27,6 +30,26 @@
 <!--    {{item.name}}-->
 <!--  </li>-->
 <!--</ul>-->
+
+<ng-template #content let-modal let-user>
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">שימי ❤!️</h4>
+  <div type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </div>
+</div>
+<div class="modal-body">
+ <div>את עומדת למחוק את התאריך עבור יום הראיה האחרון
+   <span>{{translatNGBDate(selectedInterval.currentSeeDay)}}!</span>
+ </div>
+  <div class="text-danger">האם את בטוחה?</div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cross click')">ביטול</button>
+  <button type="button" class="btn btn-primary" (click)="delete($event)" >אישור</button>
+</div>
+</ng-template>
+
 
 <ng-template #spinner>
   <div class="text-center text-black-50">

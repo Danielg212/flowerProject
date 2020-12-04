@@ -4,8 +4,9 @@ import {Observable} from 'rxjs';
 import {MonthInterval} from '../../../services/MonthInterval.model';
 import {AngularFirestoreDocument} from '@angular/fire/firestore';
 import {UserModel} from '../../../services/User.model';
-import {NgbDatepickerI18n} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDatepickerI18n, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {utils} from '../../../utils/Utils';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-intervals-diary',
@@ -16,10 +17,12 @@ import {utils} from '../../../utils/Utils';
 })
 export class IntervalsDiaryComponent implements OnInit {
   private itemDoc: AngularFirestoreDocument<UserModel>;
+  public selectedInterval: MonthInterval = {} as MonthInterval;
   item: Observable<UserModel> = null;
   // public test: Observable<any[]>;
+  private modalRef: NgbModalRef;
 
-  constructor(private auth: AuthService, public i18n: NgbDatepickerI18n) {
+  constructor(private auth: AuthService, public i18n: NgbDatepickerI18n, private modalService: NgbModal) {
     // this.itemDoc = auth.getUserIntervalsHistory();
     // this.item = this.itemDoc.valueChanges();
 
@@ -27,22 +30,33 @@ export class IntervalsDiaryComponent implements OnInit {
 
   ngOnInit(): void {
     // this.test = this.auth.getItems();
-    this.itemDoc = this.auth.getUserIntervalsHistory();
-    this.item = this.itemDoc.valueChanges();
-
+    this.item = this.auth.getUserIntervalsHistory().valueChanges().pipe(
+      map(value => {
+        value.intervalsHistory.reverse();
+        return value;
+      })
+    );
   }
 
   translatNGBDate(date: any): string {
     return this.i18n.getDayAriaLabel(date);
   }
 
-  delete($event: MouseEvent, interval: MonthInterval) {
+  delete($event: MouseEvent) {
     $event.preventDefault();
-    console.log('about to delete', interval);
-    this.auth.removeMonthForIntervalsHistory(interval);
+    this.modalRef.close();
+    console.log('about to delete', this.selectedInterval);
+    this.auth.removeMonthForIntervalsHistory(this.selectedInterval);
   }
 
   getDayTimeStr(b: boolean): string {
     return utils.getDayTimeStr(b);
+  }
+
+
+  openModal($event: MouseEvent, content, interval: MonthInterval) {
+    $event.preventDefault();
+    this.modalRef = this.modalService.open(content);
+    this.selectedInterval = interval;
   }
 }

@@ -3,7 +3,7 @@ $top_nav_width: 14px;
 
 aside {
   z-index: 10;
-  background: lavender;
+  background: #ffffff;
   position: fixed;
   width: $side_width;
   height: 100%;
@@ -78,9 +78,11 @@ main {
     }
   }
 }
+.modal-header .close{
+  margin: -1rem -1rem -1rem 0;
+}
 
-
-.close {
+.menu-close {
   position: relative;
   cursor: pointer;
   height: 24px;
@@ -89,11 +91,11 @@ main {
 
 }
 
-.close:hover {
+.menu-close:hover {
   opacity: 1;
 }
 
-.close:before, .close:after {
+.menu-close:before, .menu-close:after {
   position: absolute;
   right: 10px;
   content: ' ';
@@ -102,10 +104,10 @@ main {
   background-color: #000;
 }
 
-.close:before {
+.menu-close:before {
   transform: rotate(45deg);
 }
 
-.close:after {
+.menu-close:after {
   transform: rotate(-45deg);
 }
