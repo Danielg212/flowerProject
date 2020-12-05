@@ -3,7 +3,6 @@ import mikvehListData from '../../../../assets/static/mikveList.json';
 import {MikvehModel} from '../../../services/Mikveh.model';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mikveh-list',
@@ -11,7 +10,7 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./mikveh-list.component.scss']
 })
 export class MikvehListComponent implements OnInit {
-  model: MikvehModel;
+  model: MikvehModel | string;
 
   public mikvheList: Array<MikvehModel> = new Array<MikvehModel>();
 
@@ -23,6 +22,12 @@ export class MikvehListComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  get modelObjData(){
+    if (typeof this.model === 'string' || this.model === undefined) { return ; }
+    return Object.keys(this.model);
+  }
+
 
   // keyword$ = this.keywordInputChange$.switchMap();
 
@@ -37,7 +42,7 @@ export class MikvehListComponent implements OnInit {
           .slice(0, 10)))
 
   formatter = (x: { City: string, neighborhood: string | undefined, Mikve_Address: string }) => {
-    return `${x.City} ${x.neighborhood ? ' - ' + x.neighborhood : ''}  ${x.Mikve_Address ? ' - ' + x.Mikve_Address : ''}`;
+    return `${x.City} ${x.neighborhood ? ' - ' + x.neighborhood : ''}  ${x.Mikve_Address ? '- ' + x.Mikve_Address : ''}`;
   }
 
 

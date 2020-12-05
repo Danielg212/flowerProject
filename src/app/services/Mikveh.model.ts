@@ -1,8 +1,8 @@
 export interface MikvehModel {
-  Religious_Council: string;
-  City: string;
+  Religious_Council?: string;
+  City?: string;
   neighborhood?: string;
-  Mikve_Address: string;
+  Mikve_Address?: string;
   Phone?: string;
   Opening_Hours_Summer?: string;
   Opening_Hours_Winter?: string;
