@@ -56,7 +56,7 @@ export class IntervalsDiaryComponent implements OnInit {
 
   openModal($event: MouseEvent, content, interval: MonthInterval) {
     $event.preventDefault();
-    this.modalRef = this.modalService.open(content);
+    this.modalRef = this.modalService.open(content, {windowClass: 'modal-holder', centered: true});
     this.selectedInterval = interval;
   }
 }
