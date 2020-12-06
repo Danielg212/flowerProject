@@ -7,5 +7,9 @@
         ]
       }
     }
+  },
+  "projects": {
+    "default": "flower-add2b",
+    "stageing": "flower-add2b"
   }
 }
