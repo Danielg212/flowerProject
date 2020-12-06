@@ -49,7 +49,7 @@ import {VideoPlayerComponent} from './components/video-player/video-player.compo
     FontAwesomeModule,
     // AngularFireAnalyticsModule,
     AngularFirestoreModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' })
   ],
   providers: [AngularFireAuthGuard,
     {provide: NgbCalendar, useClass: NgbCalendarHebrew},
