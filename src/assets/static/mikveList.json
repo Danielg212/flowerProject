@@ -246,14 +246,56 @@
       "Opening_Hours_Holiday_Eve_Shabat_Eve": "בתאום מראש",
       "Opening_Hours_Saturday_Night_Good_Day": "שעה אחרי צאת שבת לשעתיים וחצי",
       "Accessibility": "הנגשה חלקית"
-    },    {
+    },
+    {
       "Religious_Council": "אלעד",
       "City": "אלעד",
       "Mikve_Address": "חוני המעגל 8",
       "Phone": "03-93096319",
-      "Opening_Hours_Summer": "חצי שעה אחרי שקיעה לשעתיים וחצי",
-      "Opening_Hours_Winter": "חצי שעה אחרי שקיעה לשעתיים וחצי",
-      "Opening_Hours_Holiday_Eve_Shabat_Eve": "בתאום מראש",
+      "Opening_Hours_Summer": "חצי שעה לפני השקיעה עד 22.45",
+      "Opening_Hours_Winter": "חצי שעה לפני השקיעה עד 21.45",
+      "Opening_Hours_Holiday_Eve_Shabat_Eve": "ערב שבת מ- 20:00 אחרי הדלקת נרות זמן אלעד במשך שעה וחצי.",
+      "Opening_Hours_Saturday_Night_Good_Day": "שעה אחרי צאת שבת לשעתיים וחצי",
+      "Accessibility": "הנגשה חלקית"
+    },    {
+      "Religious_Council": "אלעד",
+      "City": "אלעד",
+      "Mikve_Address": "ניסים גאון 39",
+      "Phone": "03-9095079",
+      "Opening_Hours_Summer": "חצי שעה לפני השקיעה עד 22.45",
+      "Opening_Hours_Winter": "חצי שעה לפני השקיעה עד 21.45",
+      "Opening_Hours_Holiday_Eve_Shabat_Eve": "ערב שבת מ- 20:00 אחרי הדלקת נרות זמן אלעד במשך שעה וחצי.",
+      "Opening_Hours_Saturday_Night_Good_Day": "שעה אחרי צאת שבת לשעתיים וחצי",
+      "Accessibility": "הנגשה חלקית"
+    },    {
+      "Religious_Council": "אלעד",
+      "City": "אלעד",
+      "Mikve_Address": "בן עוזיאל 13",
+      "Phone": "03-9090513",
+      "Opening_Hours_Summer": "חצי שעה לפני השקיעה עד 22.45",
+      "Opening_Hours_Winter": "חצי שעה לפני השקיעה עד 21.45",
+      "Opening_Hours_Holiday_Eve_Shabat_Eve": "ערב שבת מ- 20:00 אחרי הדלקת נרות זמן אלעד במשך שעה וחצי.",
+      "Opening_Hours_Saturday_Night_Good_Day": "שעה אחרי צאת שבת לשעתיים וחצי",
+      "Accessibility": "הנגשה חלקית",
+      "Notes": "מקווה תורן פתוח חצי שעה לאחר זמני הסגירה של שאר המקוואות."
+    },    {
+      "Religious_Council": "אלעד",
+      "City": "אלעד",
+      "Mikve_Address": "הרי\"ף31",
+      "Phone": "03-9325733",
+      "Opening_Hours_Summer": "חצי שעה לפני השקיעה עד 22.45",
+      "Opening_Hours_Winter": "חצי שעה לפני השקיעה עד 21.45",
+      "Opening_Hours_Holiday_Eve_Shabat_Eve": "ערב שבת מ- 20:00 אחרי הדלקת נרות זמן אלעד במשך שעה וחצי.",
+      "Opening_Hours_Saturday_Night_Good_Day": "שעה אחרי צאת שבת לשעתיים וחצי",
+      "Accessibility": "הנגשה חלקית"
+    },    {
+      "Religious_Council": "אלעד",
+      "City": "אלעד",
+      "Mikve_Address": "אבטליון",
+      "Phone": "03-9095744",
+      "Opening_Hours_Summer": "חצי שעה לפני השקיעה עד 22.45",
+      "Opening_Hours_Winter": "חצי שעה לפני השקיעה עד 21.45",
+      "Opening_Hours_Holiday_Eve_Shabat_Eve": "ערב שבת מ- 20:00 אחרי הדלקת נרות זמן אלעד במשך שעה וחצי.",
       "Opening_Hours_Saturday_Night_Good_Day": "שעה אחרי צאת שבת לשעתיים וחצי",
       "Accessibility": "הנגשה חלקית"
     },

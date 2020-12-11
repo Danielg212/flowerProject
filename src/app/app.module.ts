@@ -22,6 +22,7 @@ import {DayNightpickerComponent} from './components/dashboard/day-night-picker/d
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {TorahLessonsComponent} from './components/dashboard/torah-lessons/torah-lessons.component';
 import {VideoPlayerComponent} from './components/video-player/video-player.component';
+import {AngularFireMessagingModule} from '@angular/fire/messaging';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import {VideoPlayerComponent} from './components/video-player/video-player.compo
     AppRoutingModule,
     NgbModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireMessagingModule,
     FontAwesomeModule,
     // AngularFireAnalyticsModule,
     AngularFirestoreModule,

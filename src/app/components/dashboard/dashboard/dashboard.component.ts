@@ -16,9 +16,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   // currentMessage = new BehaviorSubject(null);
 
 
-  constructor(private auth: AuthService, private activatedRoute: ActivatedRoute) {
-    console.log('helllo from dashboard');
-
+  constructor(private auth: AuthService,
+              private activatedRoute: ActivatedRoute,
+              private afMessaging: AngularFireMessaging) {
   }
 
   public value: UserModel = {};
