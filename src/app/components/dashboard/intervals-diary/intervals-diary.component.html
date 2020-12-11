@@ -1,9 +1,9 @@
 <div *ngIf="item | async as monthData;else spinner">
-  <div *ngIf="monthData.intervalsHistory===undefined || !monthData.intervalsHistory.length  ;else other">
+  <div *ngIf="monthData.data===undefined || !monthData.data.length  ;else other">
     <div class="text-center"><h1>אין עונות שמורות ביומן</h1></div>
   </div>
   <ng-template #other>
-    <div class="card mb-1" *ngFor="let interval of monthData.intervalsHistory">
+    <div class="card mb-1" *ngFor="let interval of monthData.data">
       <div class="card-body">
         <h5 class="card-title"> פרטים עבור יום ראיה: {{translatNGBDate(interval.currentSeeDay)}}
           <span>- עונת {{getDayTimeStr(interval.isCurrentSeenNight)}} </span>

@@ -18,7 +18,7 @@ import {map} from 'rxjs/operators';
 export class IntervalsDiaryComponent implements OnInit {
   private itemDoc: AngularFirestoreDocument<UserModel>;
   public selectedInterval: MonthInterval = {} as MonthInterval;
-  item: Observable<UserModel> = null;
+  item: Observable<any> = null;
   // public test: Observable<any[]>;
   private modalRef: NgbModalRef;
 
@@ -31,8 +31,13 @@ export class IntervalsDiaryComponent implements OnInit {
   ngOnInit(): void {
     // this.test = this.auth.getItems();
     this.item = this.auth.getUserIntervalsHistory().valueChanges().pipe(
-      map(value => {
-        value.intervalsHistory.reverse();
+      map((value: { data: Array<MonthInterval> }) => {
+        if (value.data) {
+          value.data
+            .sort((a, b) => (b.currentSeeDay.year - a.currentSeeDay.year)
+              || (b.currentSeeDay.month - a.currentSeeDay.month)
+              || (b.currentSeeDay.day - a.currentSeeDay.day));
+        }
         return value;
       })
     );
