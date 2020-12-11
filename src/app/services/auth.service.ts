@@ -138,35 +138,67 @@ export class AuthService {
   // tslint:disable-next-line:jsdoc-format
   /** async **/ addMonthForIntervalsHistory(intervalData: MonthInterval) {
     // const user = await this.afAuth.currentUser;
-    // console.log('dsfdsfds', user);
     // this.afs.doc(`IntervalsHistory/${this.user.uid}`).set([].push(intervalData));
-
-    const washingtonRef = this.afs.collection(`users`).doc(`${this.user.uid}`);
-
-// Atomically add a new region to the "regions" array field.
-    return washingtonRef.update({
-      intervalsHistory: FieldValue.arrayUnion(intervalData)
-    });
+    const data = [intervalData];
+    const newDatasetRef = this.afs
+      .collection<any>(`intervalsHistory`)
+      .doc(`${this.user.uid}`);
 
 
+    return this.listOldIntervalsHistory()
+      .valueChanges()
+      .pipe(
+        take(1),
+        tap((oldData: any) => {
+        data.push(...oldData.intervalsHistory);
+        newDatasetRef.update({
+          data: FieldValue.arrayUnion(...data)
+        });
+      })).toPromise();
+
+    // this.listOldIntervalsHistory()
+    //   .snapshotChanges()
+    //   .subscribe(value => {
+    //     data.push(...value.payload.get('intervalsHistory'));
+    //     return newDatasetRef.update({
+    //       data: FieldValue.arrayUnion(...data)
+    //     });
   }
 
   removeMonthForIntervalsHistory(intervalData: MonthInterval) {
-    const washingtonRef = this.afs.collection(`users`).doc(`${this.user.uid}`);
+    const washingtonRef = this.afs
+      .collection(`intervalsHistory`)
+      .doc(`${this.user.uid}`);
 // Atomically remove a region from the "regions" array field.
     washingtonRef.update({
-      intervalsHistory: FieldValue.arrayRemove(intervalData)
+      data: FieldValue.arrayRemove(intervalData)
     });
   }
 
-  getUserIntervalsHistory(): AngularFirestoreDocument<UserModel> {
+  getUserIntervalsHistory(): AngularFirestoreDocument<any> {
     const user = JSON.parse(localStorage.getItem('user')) as UserModel;
-    return this.afs.collection<UserModel>('users').doc(user.uid);
+    return this.afs.collection<Array<MonthInterval>>('intervalsHistory').doc(user.uid);
     // this.groceryItemsDoc = this.afs.doc<UserModel>('users/' + user.uid);
     // this.groceryItems = this.groceryItemsDoc.collection<GroceryItem>('GroceryItems').valueChanges();
   }
 
   getItems(): Observable<any[]> {
     return this.afs.collection('items').valueChanges();
+  }
+
+  listOldIntervalsHistory(): AngularFirestoreDocument<Array<MonthInterval>> {
+    return this.afs.collection<Array<MonthInterval>>('users').doc(`${this.user.uid}`);
+  }
+
+  async updateData(value: string, key: string) {
+    try {
+      const newDatasetRef = this.afs
+        .collection<any>(`users`)
+        .doc(`${this.user.uid}`);
+
+      await newDatasetRef.update({[key]: value});
+    } catch (e) {
+      console.error(e);
+    }
   }
 }
