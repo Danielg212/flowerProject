@@ -150,11 +150,11 @@ export class AuthService {
       .pipe(
         take(1),
         tap((oldData: any) => {
-        data.push(...oldData.intervalsHistory);
-        newDatasetRef.update({
-          data: FieldValue.arrayUnion(...data)
-        });
-      })).toPromise();
+          data.push(...oldData.intervalsHistory);
+          newDatasetRef.set({
+            data: FieldValue.arrayUnion(...data)
+          }, {merge: true});
+        })).toPromise();
 
     // this.listOldIntervalsHistory()
     //   .snapshotChanges()
