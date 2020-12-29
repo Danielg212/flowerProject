@@ -109,7 +109,6 @@ h1 {
   letter-spacing: 3px;
   text-align: center;
   font-weight: 300;
-  margin-top: 20%;
 }
 
 .desc {
@@ -139,8 +138,8 @@ p {
   @media (max-width: 768px) {
     &.smaller{
       position:unset;
-      width: 180px;
-      height: 200px;
+      width: 50vw;
+      height: 50vw;
       border-radius: 50%;
       border: 2px solid #ffe8f1;
     }
