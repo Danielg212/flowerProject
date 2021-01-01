@@ -1,57 +1,15 @@
-<!-- Toolbar -->
 
-<!--<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">-->
-<!--  <a class="navbar-brand" [routerLink]="'.'">-->
-<!--    <img-->
-<!--      width="50"-->
-<!--      alt="Angular Logo"-->
-<!--      src="assets/svg/love.svg"-->
-<!--    />-->
-<!--    <span>פרח</span>-->
-<!--  </a>-->
-<!--  dsad-->
-<!--  <div class="spacer"></div>-->
-<!--  &lt;!&ndash; Step 3: Toggle the value of the property when the toggler button is clicked. &ndash;&gt;-->
-<!--  <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">-->
-<!--    &#9776;-->
-<!--  </button>-->
-
-
-
-<!--  &lt;!&ndash; Step 2: Add the ngbCollapse directive to the element below. &ndash;&gt;-->
-<!--  <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse flex-md-grow-0">-->
-<!--    <ul class="navbar-nav">-->
-<!--      <li class="nav-item active">-->
-<!--        &lt;!&ndash; Step 4: Close the menu when a link is clicked. &ndash;&gt;-->
-<!--        <a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">Features</a>-->
-<!--      </li>-->
-<!--      <li class="nav-item">-->
-<!--        <a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">Examples</a>-->
-<!--      </li>-->
-<!--      <li class="nav-item">-->
-<!--        <a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">About</a>-->
-<!--      </li>-->
-<!--    </ul>-->
-<!--  </div>-->
-
-<!--</nav>-->
-
-
-
-<app-header [userModel]="value" (emitOutput)="onLogout($event)"></app-header>
+<app-header [userModel]="userData" (emitOutput)="onLogout($event)"></app-header>
 
 <app-sidebar></app-sidebar>
 <main class="col-12 adjustable" role="main">
     <h3>
-      <div>{{value.displayName}},</div>
+      <div>{{userData.displayName}},</div>
       <div> ברוכה הבאה!</div>
     </h3>
-<!--  <button class="button submit" (click)="requestPermission()">requestPushNotificationsPermission</button>-->
   <div class="row">
       <div class="col-md-10 col-12">
         <router-outlet></router-outlet>
-
-<!--        <app-abstinence-days-calc (saveMonth)="onMonthSaved($event)"></app-abstinence-days-calc>-->
       </div>
     </div>
 </main>

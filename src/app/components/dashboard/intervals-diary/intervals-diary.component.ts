@@ -6,7 +6,6 @@ import {AngularFirestoreDocument} from '@angular/fire/firestore';
 import {UserModel} from '../../../services/User.model';
 import {NgbDatepickerI18n, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {utils} from '../../../utils/Utils';
-import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-intervals-diary',
@@ -29,18 +28,7 @@ export class IntervalsDiaryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.test = this.auth.getItems();
-    this.item = this.auth.getUserIntervalsHistory().valueChanges().pipe(
-      map((value: { data: Array<MonthInterval> }) => {
-        if (value.data) {
-          value.data
-            .sort((a, b) => (b.currentSeeDay.year - a.currentSeeDay.year)
-              || (b.currentSeeDay.month - a.currentSeeDay.month)
-              || (b.currentSeeDay.day - a.currentSeeDay.day));
-        }
-        return value;
-      })
-    );
+    this.item = this.auth.getUserIntervalsHistory();
   }
 
   translatNGBDate(date: any): string {

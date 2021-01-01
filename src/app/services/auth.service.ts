@@ -1,14 +1,14 @@
 import {Injectable, NgZone} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {Router} from '@angular/router';
-import {map, switchMap, take, tap} from 'rxjs/operators';
+import {first, map, switchMap, take, tap} from 'rxjs/operators';
 import {UserModel} from './User.model';
 // import * as firebase from 'firebase/app';
 // import 'firebase/auth';
 // import * as firebase from 'firebase/app';
-import {auth, firestore} from 'firebase/app';
+import {auth, firestore, User} from 'firebase/app';
 import {MonthInterval} from './MonthInterval.model';
 import FieldValue = firestore.FieldValue;
 
@@ -18,8 +18,10 @@ import FieldValue = firestore.FieldValue;
 })
 export class AuthService {
   users$: Observable<any>;
-  userData$: Observable<any>;
-  private user: firebase.User = null;
+  userData$: Observable<User| null>;
+
+  private user$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -31,7 +33,7 @@ export class AuthService {
     this.userData$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
-          this.user = user;
+          this.user$.next(user);
           localStorage.setItem('user', JSON.stringify(user));
           JSON.parse(localStorage.getItem('user'));
           return of(user);
@@ -42,26 +44,11 @@ export class AuthService {
         }
       })
     );
-
-    // this.users$ = this.afAuth.authState.pipe(
-    //   switchMap(user => {
-    //     console.log('user: ', user);
-    //     if (user) {
-    //       this.afs.doc<UserModel>(`users/${user.uid}`).valueChanges();
-    //       return of(user);
-    //     } else {
-    //       return of(null);
-    //     }
-    //   })
-    // );
   }
 
-  // // Returns true when user is looged in and email is verified
-  // get isLoggedIn(): boolean {
-  //   const user = JSON.parse(localStorage.getItem('user'));
-  //   return (user !== null && user.emailVerified !== false) ? true : false;
-  // }
-
+  getUser() {
+    return this.userData$.pipe(first());
+  }
   // Returns true when user is looged in and email is verified
   isLoggedIn(): Observable<boolean> {
     return this.afAuth.authState
@@ -134,6 +121,19 @@ export class AuthService {
     });
   }
 
+  async updateData(value: string, key: string) {
+    try {
+      const newDatasetRef = this.afs
+        .collection<any>(`users`)
+        .doc(`${this.user$.getValue().uid}`);
+
+      await newDatasetRef.update({[key]: value});
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+
   // TODO export to diffrent serivice
   // tslint:disable-next-line:jsdoc-format
   /** async **/ addMonthForIntervalsHistory(intervalData: MonthInterval) {
@@ -142,7 +142,7 @@ export class AuthService {
     const data = [intervalData];
     const newDatasetRef = this.afs
       .collection<any>(`intervalsHistory`)
-      .doc(`${this.user.uid}`);
+      .doc(`${this.user$.getValue().uid}`);
 
 
     return this.listOldIntervalsHistory()
@@ -168,37 +168,30 @@ export class AuthService {
   removeMonthForIntervalsHistory(intervalData: MonthInterval) {
     const washingtonRef = this.afs
       .collection(`intervalsHistory`)
-      .doc(`${this.user.uid}`);
+      .doc(`${this.user$.getValue().uid}`);
 // Atomically remove a region from the "regions" array field.
     washingtonRef.update({
       data: FieldValue.arrayRemove(intervalData)
     });
   }
 
-  getUserIntervalsHistory(): AngularFirestoreDocument<any> {
+  getUserIntervalsHistory(): Observable<{ data: Array<MonthInterval> }> {
     const user = JSON.parse(localStorage.getItem('user')) as UserModel;
-    return this.afs.collection<Array<MonthInterval>>('intervalsHistory').doc(user.uid);
+    return this.afs.collection<Array<MonthInterval>>('intervalsHistory').doc(user.uid).valueChanges().pipe(
+      map((value: any) => {
+        if (value.data) {
+          value.data
+            .sort((a, b) => (b.currentSeeDay.year - a.currentSeeDay.year)
+              || (b.currentSeeDay.month - a.currentSeeDay.month)
+              || (b.currentSeeDay.day - a.currentSeeDay.day));
+        }
+        return value;
+      })
+    );
     // this.groceryItemsDoc = this.afs.doc<UserModel>('users/' + user.uid);
     // this.groceryItems = this.groceryItemsDoc.collection<GroceryItem>('GroceryItems').valueChanges();
   }
-
-  getItems(): Observable<any[]> {
-    return this.afs.collection('items').valueChanges();
-  }
-
   listOldIntervalsHistory(): AngularFirestoreDocument<Array<MonthInterval>> {
-    return this.afs.collection<Array<MonthInterval>>('users').doc(`${this.user.uid}`);
-  }
-
-  async updateData(value: string, key: string) {
-    try {
-      const newDatasetRef = this.afs
-        .collection<any>(`users`)
-        .doc(`${this.user.uid}`);
-
-      await newDatasetRef.update({[key]: value});
-    } catch (e) {
-      console.error(e);
-    }
+    return this.afs.collection<Array<MonthInterval>>('users').doc(`${this.user$.getValue().uid}`);
   }
 }

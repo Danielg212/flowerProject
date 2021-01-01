@@ -20,24 +20,34 @@ export class AbstinenceDaysCalcComponent implements OnInit {
   loading: boolean;
 
   daysToHiglig: Array<NgbDateStruct> = new Array<NgbDateStruct>();
+  highlightSingleDay: NgbDateStruct = null;
   private NgbCalendarHebrew: any = new NgbCalendarHebrew();
 
   lastSeen: PeriodDay = {isSeenNight: false, seenDay: this.calendar.getToday()};
   currentSeen: PeriodDay = {isSeenNight: false, seenDay: this.calendar.getToday()};
 
+  intervalsHistory: Array<MonthInterval> = [];
+
   constructor(private calendar: NgbCalendar, public i18n: NgbDatepickerI18n, private auth: AuthService) {
   }
 
   ngOnInit(): void {
-    this.onLastSeenDayChanged( this.lastSeen.seenDay);
+    this.auth.getUserIntervalsHistory().subscribe(
+      value => {
+        console.log(value);
+        this.intervalsHistory = value.data.slice(0, 4);
+        console.log(this.intervalsHistory);
+        this.daysToHiglig = this.intervalsHistory.reduce((acc, currentValue) =>
+          [...acc, currentValue.monthInterval, currentValue.averageInterval, currentValue.haflagaInterval], []);
+
+      });
+    this.onLastSeenDayChanged(this.lastSeen.seenDay);
     this.onCurrentSeeDayChanged(this.currentSeen.seenDay);
   }
 
   onLastSeenDayChanged(selectedDate: NgbDate) {
     this.lastSeen.seenDay = selectedDate;
-    this.daysToHiglig = [];
-    this.daysToHiglig.push(this.lastSeen.seenDay);
-    this.daysToHiglig = this.daysToHiglig.slice();
+    this.highlightSingleDay = this.lastSeen.seenDay;
     this.onCurrentSeeDayChanged(this.currentSeen.seenDay);
 
   }
@@ -119,15 +129,6 @@ export class AbstinenceDaysCalcComponent implements OnInit {
   getOnaDayTime(): string {
     return this.currentSeen.isSeenNight ? 'לילה' : 'יום';
   }
-
-  // aaa = () => {
-  //   if (this.isLastSeenNight) {
-  //     // this.lastSeenDay = this.calendar.getNext(NgbDate.from(this.lastSeenDay), 'd', 1);
-  //   } else {
-  //     // this.lastSeenDay = this.calendar.getNext(NgbDate.from(this.lastSeenDay), 'd', -1);
-  //   }
-  //
-  // }
 
   genericOnChange(chk: any) {
     if (chk.isSeenNight) {

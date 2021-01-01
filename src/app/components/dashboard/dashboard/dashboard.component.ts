@@ -21,11 +21,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
               private afMessaging: AngularFireMessaging) {
   }
 
-  public value: UserModel = {};
+  public userData: Partial<UserModel> = {};
 
   ngOnInit(): void {
-    this.auth.userData$.subscribe(
-      value1 => this.value = value1
+     this.auth.getUser().subscribe(
+      value1 => this.userData = value1
     );
     // this.value = this.auth.userData;
 

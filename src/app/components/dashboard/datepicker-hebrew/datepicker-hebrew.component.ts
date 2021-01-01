@@ -12,6 +12,7 @@ import {utils} from '../../../utils/Utils';
 export class DatepickerHebrewComponent implements OnInit {
 
   @Output() dateChange = new EventEmitter();
+  @Input() markDay: NgbDateStruct;
 
   private _markDays: Array<NgbDateStruct> = new Array<NgbDateStruct>();
 
@@ -34,6 +35,7 @@ export class DatepickerHebrewComponent implements OnInit {
   constructor(private calendar: NgbCalendar, public i18n: NgbDatepickerI18n) {
     this.dayTemplateData = this.dayTemplateData.bind(this);
   }
+
   ngOnInit(): void {
   }
 
@@ -56,6 +58,10 @@ export class DatepickerHebrewComponent implements OnInit {
       return this.markDays.find(t => date.equals(t));
     }
     return;
+  }
+
+  isMarkedDay = (date: NgbDate) => {
+    return date.equals(this.markDay);
   }
 
 }

@@ -1,5 +1,4 @@
 <div class="card ">
-
   <div class="row  align-items-center text-center card-body">
 
     <div class="col-md-4 col-12">
@@ -8,16 +7,18 @@
                            (change)="genericOnChange(lastSeen);onLastSeenDayChanged(lastSeen.seenDay);"></app-day-nightpicker>
       אנא סמני את יום הראיה בפעם הקודמת
       <app-datepicker-hebrew [model]="lastSeen.seenDay" (dateChange)="onLastSeenDayChanged($event)"
+                             [markDays]="daysToHiglig"
                              (click)="scroll(currentDay)"></app-datepicker-hebrew>
     </div>
     <div class="col-md-4 col-12" #currentDay>
-      <div >
+      <div>
         אנא סמני את זמן הראיה
         <app-day-nightpicker [(day)]="currentSeen.isSeenNight" [id]="'bbb'"
                              (change)="genericOnChange(currentSeen);onCurrentSeeDayChanged(currentSeen.seenDay);"></app-day-nightpicker>
 
         אנא סמני את יום הראיה בפעם הנוכחית
         <app-datepicker-hebrew [model]="currentSeen.seenDay" (dateChange)="onCurrentSeeDayChanged($event)"
+                               [markDay] ="highlightSingleDay"
                                [markDays]="daysToHiglig"
                                (click)="scroll(summary);">
         </app-datepicker-hebrew>
@@ -65,7 +66,7 @@
               <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
               <span class="sr-only">שומר...</span>
             </ng-container>
-            <ng-container *ngIf="!loading &&btn.hasAttribute('disabled');else save">נשמר! 🎉 </ng-container>
+            <ng-container *ngIf="!loading &&btn.hasAttribute('disabled');else save">נשמר! 🎉</ng-container>
             <ng-template #save>שמרי</ng-template>
           </button>
         </div>
