@@ -3,6 +3,7 @@ import {NgbCalendar, NgbCalendarHebrew, NgbDate, NgbDatepickerI18n, NgbDateStruc
 import {utils} from '../../../utils/Utils';
 import {MonthInterval, PeriodDay} from '../../../services/MonthInterval.model';
 import {AuthService} from '../../../services/auth.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-abstinence-days-calc',
@@ -28,21 +29,27 @@ export class AbstinenceDaysCalcComponent implements OnInit {
 
   intervalsHistory: Array<MonthInterval> = [];
 
-  constructor(private calendar: NgbCalendar, public i18n: NgbDatepickerI18n, private auth: AuthService) {
+  constructor(private calendar: NgbCalendar,
+              public i18n: NgbDatepickerI18n,
+              private auth: AuthService,
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.auth.getUserIntervalsHistory().subscribe(
       value => {
-        console.log(value);
-        this.intervalsHistory = value.data.slice(0, 4);
-        console.log(this.intervalsHistory);
-        this.daysToHiglig = this.intervalsHistory.reduce((acc, currentValue) =>
-          [...acc, currentValue.monthInterval, currentValue.averageInterval, currentValue.haflagaInterval], []);
+        this.initDays(value);
+      }, error => {
+        console.error('Error! ', error);
+      },
+      () => {
+        this.onCurrentSeeDayChanged(this.currentSeen.seenDay);
+        this.onLastSeenDayChanged(this.lastSeen.seenDay);
 
       });
-    this.onLastSeenDayChanged(this.lastSeen.seenDay);
-    this.onCurrentSeeDayChanged(this.currentSeen.seenDay);
+
+
   }
 
   onLastSeenDayChanged(selectedDate: NgbDate) {
@@ -120,7 +127,11 @@ export class AbstinenceDaysCalcComponent implements OnInit {
       value => {
         console.log('successfully add the month!');
       }
-    ).finally(() => this.loading = false);
+    ).finally(() => {
+      this.loading = false;
+      this.router.navigate(['diary'], {relativeTo: this.route.parent});
+
+    });
 
 
     // this.saveMonth.emit(selectedMonth);
@@ -138,5 +149,17 @@ export class AbstinenceDaysCalcComponent implements OnInit {
 
     }
 
+  }
+
+  private initDays(days: { data: Array<MonthInterval> }) {
+    this.intervalsHistory = days.data.slice(0, 4);
+    this.daysToHiglig = this.intervalsHistory.reduce((acc, currentValue) =>
+      [...acc, currentValue.monthInterval, currentValue.averageInterval, currentValue.haflagaInterval], []);
+    if (this.intervalsHistory[0]) {
+      this.lastSeen = {
+        isSeenNight: this.intervalsHistory[0].isCurrentSeenNight,
+        seenDay: this.intervalsHistory[0].currentSeeDay
+      };
+    }
   }
 }

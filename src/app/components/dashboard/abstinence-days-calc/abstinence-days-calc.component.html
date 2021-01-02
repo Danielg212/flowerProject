@@ -1,14 +1,21 @@
 <div class="card ">
   <div class="row  align-items-center text-center card-body">
-
     <div class="col-md-4 col-12">
-      אנא סמני את זמן הראיה
-      <app-day-nightpicker [(day)]="lastSeen.isSeenNight" [id]="'aaa'"
-                           (change)="genericOnChange(lastSeen);onLastSeenDayChanged(lastSeen.seenDay);"></app-day-nightpicker>
-      אנא סמני את יום הראיה בפעם הקודמת
-      <app-datepicker-hebrew [model]="lastSeen.seenDay" (dateChange)="onLastSeenDayChanged($event)"
-                             [markDays]="daysToHiglig"
-                             (click)="scroll(currentDay)"></app-datepicker-hebrew>
+      <div *ngIf="!intervalsHistory.length;else lastSeenData">
+        אנא סמני את זמן הראיה
+        <app-day-nightpicker [(day)]="lastSeen.isSeenNight" [id]="'aaa'"
+                             (change)="genericOnChange(lastSeen);onLastSeenDayChanged(lastSeen.seenDay);"></app-day-nightpicker>
+        אנא סמני את יום הראיה בפעם הקודמת
+        <app-datepicker-hebrew [model]="lastSeen.seenDay" (dateChange)="onLastSeenDayChanged($event)"
+                               [markDays]="daysToHiglig"
+                               (click)="scroll(currentDay)"></app-datepicker-hebrew>
+      </div>
+      <ng-template #lastSeenData>
+        <div class="p-2">
+          <div>יום ראיה קודם</div>
+          <div class="font-weight-bold" style="font-size: 20px">  {{ i18n.getDayAriaLabel(intervalsHistory[0].currentSeeDay) }}</div>
+        </div>
+      </ng-template>
     </div>
     <div class="col-md-4 col-12" #currentDay>
       <div>
@@ -19,12 +26,12 @@
         אנא סמני את יום הראיה בפעם הנוכחית
         <app-datepicker-hebrew [model]="currentSeen.seenDay" (dateChange)="onCurrentSeeDayChanged($event)"
                                [markDay] ="highlightSingleDay"
-                               [markDays]="daysToHiglig"
-                               (click)="scroll(summary);">
+                               [markDays]="daysToHiglig">
         </app-datepicker-hebrew>
       </div>
     </div>
-    <div class="col-md-4 col-12" #summary>
+
+    <div *ngIf="onatBenonitDate !== null" class="col-md-4 col-12" #summary>
       <div *ngIf="currentSeen.seenDay.after(lastSeen.seenDay)">
         <!-- <img placement="top" ngbTooltip="Tooltip on top" src="assets/svg/question.svg">  -->
 
