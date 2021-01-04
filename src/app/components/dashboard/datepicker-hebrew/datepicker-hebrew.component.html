@@ -5,7 +5,7 @@
         </ngb-datepicker>
 
         <ng-template #dt let-date let-data="data" let-selected="selected" let-currentMonth="currentMonth">
-            <div class="hebrew-day" [class.bg-danger]="isSightDay(date)" [class.weekend]="isMarkedDay(date)" [class.outside]="date.month !== currentMonth" [class.selected]="selected">
+            <div class="hebrew-day" [class.warning-bg-color]="isSightDay(date)" [class.weekend]="isMarkedDay(date)" [class.outside]="date.month !== currentMonth" [class.selected]="selected">
                 <div class="gregorian-num">{{ data.gregorian.day + '/' + (data.gregorian.month) }}</div>
                 <div class="hebrew-num">{{ i18n.getDayNumerals(date) }}</div>
             </div>

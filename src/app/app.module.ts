@@ -23,6 +23,7 @@ import {ServiceWorkerModule} from '@angular/service-worker';
 import {TorahLessonsComponent} from './components/dashboard/torah-lessons/torah-lessons.component';
 import {VideoPlayerComponent} from './components/video-player/video-player.component';
 import {AngularFireMessagingModule} from '@angular/fire/messaging';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import {AngularFireMessagingModule} from '@angular/fire/messaging';
     FormsModule,
     AppRoutingModule,
     NgbModule,
+    BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireMessagingModule,
     FontAwesomeModule,

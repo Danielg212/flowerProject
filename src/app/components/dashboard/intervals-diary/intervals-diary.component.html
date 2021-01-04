@@ -1,9 +1,9 @@
-<div *ngIf="item | async as monthData;else spinner">
+<div  @listAnimation *ngIf="item | async as monthData;">
   <div *ngIf="monthData.data===undefined || !monthData.data.length  ;else other">
     <div class="text-center"><h1>אין עונות שמורות ביומן</h1></div>
   </div>
   <ng-template #other>
-    <div class="card mb-1" *ngFor="let interval of monthData.data">
+    <div class="card my-card" *ngFor="let interval of monthData.data">
       <div class="card-body">
         <h5 class="card-title"> פרטים עבור יום ראיה: {{translatNGBDate(interval.currentSeeDay)}}
           <span>- עונת {{getDayTimeStr(interval.isCurrentSeenNight)}} </span>
@@ -15,7 +15,7 @@
           <div> יום ראיה קודם  {{translatNGBDate(interval.lastSeenDay)}} עונת - {{getDayTimeStr(interval.isLastSeenNight)}}</div>
         </div>
         <div class="d-flex justify-content-around justify-content-sm-end">
-          <div class="ml-2"><a href="#" class="btn btn-danger" (click)="openModal($event,content,interval)">מחיקה</a>
+          <div class="ml-2"><a href="#" class="btn warning-bg-color" (click)="openModal($event,content,interval)">מחיקה</a>
           </div>
         </div>
       </div>
@@ -41,7 +41,7 @@
  <div>את עומדת למחוק את התאריך עבור יום הראיה האחרון
    <span>{{translatNGBDate(selectedInterval.currentSeeDay)}}!</span>
  </div>
-  <div class="text-danger">האם את בטוחה?</div>
+  <div class="warning-color">האם את בטוחה?</div>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cross click')">ביטול</button>

@@ -1,13 +1,14 @@
 <nav class="toolbar" role="banner">
 
-  <div class="cursor-pointer row" routerLink="/">
+  <div class="cursor-pointer d-flex" routerLink="/">
     <img
+      class="d-none d-md-block"
     width="50"
     alt="Angular Logo"
     src="assets/svg/love.svg"
 
   />
-    <div>
+    <div class="aaa">
       <h3 class="pa-0 m-0">ימי טהרה</h3>
       <div> חישוב ימי פרישה 🌹</div>
     </div>
@@ -20,7 +21,7 @@
 
     <img class="toggle" [src]="userModel.photoURL" alt="user Image" height="40" width="40">
     <div>
-      <a class="text-white" [routerLink]="'.'" (click)="logout()">התנתקות</a>
+      <a class="primary-color" [routerLink]="'.'" (click)="logout()">התנתקות</a>
     </div>
 
   </div>
