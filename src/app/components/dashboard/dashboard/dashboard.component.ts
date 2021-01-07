@@ -13,6 +13,7 @@ import {AngularFireMessaging} from '@angular/fire/messaging';
 export class DashboardComponent implements OnInit, OnDestroy {
   public state$: Observable<object>;
   public isMenuCollapsed = true;
+
   // currentMessage = new BehaviorSubject(null);
 
 
@@ -24,8 +25,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public userData: Partial<UserModel> = {};
 
   ngOnInit(): void {
-     this.auth.getUser().subscribe(
-      value1 => this.userData = value1
+    console.log('in ngOnInit, pretty nice here...');
+
+    this.auth.user$.subscribe(
+      value1 => {
+        return this.userData = value1;
+      }
     );
     // this.value = this.auth.userData;
 
@@ -58,25 +63,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
 
-/*  requestPushNotificationsPermission() { // requesting permission
-    this.generateToken();
-    this.afMessaging.messages.subscribe(
-      (payload) => {
-        console.log('new message received. ', payload);
-        this.currentMessage.next(payload);
-      });
+  /*  requestPushNotificationsPermission() { // requesting permission
+      this.generateToken();
+      this.afMessaging.messages.subscribe(
+        (payload) => {
+          console.log('new message received. ', payload);
+          this.currentMessage.next(payload);
+        });
 
-  }
+    }
 
-  generateToken() {
-    this.afMessaging.getToken // getting tokens
-      .subscribe(
-        async (token) => { // USER-REQUESTED-TOKEN
-          await this.auth.updateData(token, 'messagingToken');
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
-  }*/
+    generateToken() {
+      this.afMessaging.getToken // getting tokens
+        .subscribe(
+          async (token) => { // USER-REQUESTED-TOKEN
+            await this.auth.updateData(token, 'messagingToken');
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+    }*/
 }

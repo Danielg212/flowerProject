@@ -1,16 +1,17 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {NgbCalendar, NgbCalendarHebrew, NgbDate, NgbDatepickerI18n, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {utils} from '../../../utils/Utils';
 import {MonthInterval, PeriodDay} from '../../../services/MonthInterval.model';
 import {AuthService} from '../../../services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-abstinence-days-calc',
   templateUrl: './abstinence-days-calc.component.html',
   styleUrls: ['./abstinence-days-calc.component.scss']
 })
-export class AbstinenceDaysCalcComponent implements OnInit {
+export class AbstinenceDaysCalcComponent implements OnInit, OnDestroy {
 
   @Output() saveMonth = new EventEmitter<MonthInterval>();
 
@@ -26,7 +27,7 @@ export class AbstinenceDaysCalcComponent implements OnInit {
 
   lastSeen: PeriodDay = {isSeenNight: false, seenDay: this.calendar.getToday()};
   currentSeen: PeriodDay = {isSeenNight: false, seenDay: this.calendar.getToday()};
-
+  private intervalsHistorySub: Subscription;
   intervalsHistory: Array<MonthInterval> = [];
 
   constructor(private calendar: NgbCalendar,
@@ -37,7 +38,7 @@ export class AbstinenceDaysCalcComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.auth.getUserIntervalsHistory().subscribe(
+     this.intervalsHistorySub = this.auth.getUserIntervalsHistory().subscribe(
       value => {
         this.initDays(value);
       }, error => {
@@ -50,6 +51,9 @@ export class AbstinenceDaysCalcComponent implements OnInit {
       });
 
 
+  }
+  ngOnDestroy(): void {
+    this.intervalsHistorySub.unsubscribe();
   }
 
   onLastSeenDayChanged(selectedDate: NgbDate) {
