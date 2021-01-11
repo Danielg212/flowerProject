@@ -1,5 +1,5 @@
 import {Injectable, NgZone} from '@angular/core';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {Router} from '@angular/router';
@@ -10,6 +10,7 @@ import {UserModel} from './User.model';
 // import * as firebase from 'firebase/app';
 import {auth, firestore, User} from 'firebase/app';
 import {MonthInterval} from './MonthInterval.model';
+import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import FieldValue = firestore.FieldValue;
 
 
@@ -20,38 +21,54 @@ export class AuthService {
   users$: Observable<any>;
   userData$: Observable<User | null>;
 
-  private userStore$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+  private userStore$: BehaviorSubject<User> = new BehaviorSubject<User| null>(null);
   user$ = this.userStore$.asObservable();
 
+
+  private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
+  public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router,
     public ngZone: NgZone) {
+    afAuth.onAuthStateChanged(user => this.onAuthStateChanged(user));
 
-    this.initUser();
+    // this.initUser();
 
 
   }
 
-  initUser() {
-    this.afAuth.authState.pipe(
-      take(1),
-      map(user => {
-        if (user) {
-          this.userStore$.next(user);
-          localStorage.setItem('user', JSON.stringify(user));
-          JSON.parse(localStorage.getItem('user'));
-          return of(user);
-        } else {
-          localStorage.setItem('user', null);
-          JSON.parse(localStorage.getItem('user'));
-          return of(null);
-        }
-      })
-    ).subscribe();
+  onAuthStateChanged(user: User): void {
+    if (user) {
+      this.userStore$.next(user);
+      this.isAuthenticatedSubject.next(true);
+      console.log('logged In!');
+    } else {
+      this.userStore$.next(null);
+      this.isAuthenticatedSubject.next(false);
+      console.log('logged Out!');
+    }
   }
+
+  // initUser() {
+  //   this.afAuth.authState.pipe(
+  //     take(1),
+  //     map(user => {
+  //       if (user) {
+  //         this.userStore$.next(user);
+  //         localStorage.setItem('user', JSON.stringify(user));
+  //         JSON.parse(localStorage.getItem('user'));
+  //         return of(user);
+  //       } else {
+  //         localStorage.setItem('user', null);
+  //         JSON.parse(localStorage.getItem('user'));
+  //         return of(null);
+  //       }
+  //     })
+  //   ).subscribe();
+  // }
 
 
   getUser() {
@@ -146,25 +163,31 @@ export class AuthService {
 
   // TODO export to diffrent serivice
   // tslint:disable-next-line:jsdoc-format
-  /** async **/ addMonthForIntervalsHistory(intervalData: MonthInterval) {
+  /** async **/ addMonthForIntervalsHistory(intervalData: Partial<MonthInterval>, constInterval: NgbDateStruct | undefined) {
     // const user = await this.afAuth.currentUser;
     // this.afs.doc(`IntervalsHistory/${this.user.uid}`).set([].push(intervalData));
     const data = [intervalData];
     const newDatasetRef = this.afs
       .collection<any>(`intervalsHistory`)
-      .doc(`${this.userStore$.getValue().uid}`);
+      .doc(`${this.userStore$.getValue().uid}`)
+      .update({
+        data: FieldValue.arrayUnion(...[intervalData]),
+        constIntervalDate: Object.assign({}, constInterval)
+      });
 
+    return newDatasetRef;
 
-    return this.listOldIntervalsHistory()
-      .valueChanges()
-      .pipe(
-        take(1),
-        tap((oldData: any) => {
-          data.push(...oldData.intervalsHistory);
-          newDatasetRef.set({
-            data: FieldValue.arrayUnion(...data)
-          }, {merge: true});
-        })).toPromise();
+    /*   return this.listOldIntervalsHistory()
+         .valueChanges()
+         .pipe(
+           take(1),
+           tap((oldData: any) => {
+             data.push(...oldData.intervalsHistory);
+             newDatasetRef.set({
+               data: FieldValue.arrayUnion(...data)
+             }, {merge: true});
+           })).toPromise();*/
+
 
     // this.listOldIntervalsHistory()
     //   .snapshotChanges()

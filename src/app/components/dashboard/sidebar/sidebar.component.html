@@ -7,13 +7,19 @@
   <div>{{i18n.getDayAriaLabel(today)}}</div>
   <hr>
   <ul class="list-group">
+    <li (click)="closeSideNav()"  class="list-item" routerLink="/">ראשי</li>
     <li (click)="closeSideNav()"  class="list-item" routerLink="diary">יומן</li>
     <li (click)="closeSideNav()" class="list-item" routerLink="mikvehList">רשימת מקוואות</li>
     <li (click)="closeSideNav()" class="list-item" routerLink="torah-lessons">שיעורי תורה</li>
-    <li (click)="closeSideNav()" class="list-item">התראות</li>
-    <li (click)="closeSideNav()" class="list-item">הגדרות</li>
-    <li *ngIf="false" (click)="closeSideNav()" class="list-item">שאלו את הרב</li>
+    <li (click)="closeSideNav()" class="list-item">התראות - בקרוב </li>
+    <li (click)="closeSideNav()" class="list-item">התייעצו עם הרב - בקרוב</li>
+    <li (click)="closeSideNav()" class="list-item">הסכמות הרבנים</li>
   </ul>
+  <div class="animate-hue py-4">
+   הערות? הארות? נשמח לשמוע מכן!
+    <div> צרו קשר במייל - <a href="mailto:danielgiat@yahoo.com">danielgiat@yahoo.com</a>
+    </div>
+  </div>
   <div class="blockquote-footer">
     מַה טֹּבוּ אֹהָלֶיךָ יַעֲקֹב מִשְׁכְּנֹתֶיךָ יִשְׂרָאֵל.
     <div>(במדבר כד ה)</div>

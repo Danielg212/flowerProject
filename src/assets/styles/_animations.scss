@@ -1,0 +1,48 @@
+
+.animate-hue {
+  -webkit-animation: hue 10s infinite linear;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 2px rgba(244, 54, 37, 0.5);
+  background-image: -webkit-linear-gradient(
+      92deg,
+      hsl(5, 90%, 55%),
+      hsl(35, 99%, 61%)
+  );
+}
+
+
+
+/* Responsive */
+
+@media (max-width: 700px) {
+  h1 {
+    margin: 72px 0 50px;
+  }
+
+  .name {
+    font-size: 74px;
+  }
+
+  .fa {
+    margin: 0 10px 50px;
+    font-size: 64px;
+  }
+}
+
+
+/* Animation Definitions */
+
+@-webkit-keyframes hue {
+  0% {
+    -webkit-filter: hue-rotate(0deg);
+  }
+
+  50% {
+    -webkit-filter: hue-rotate(-200deg);
+  }
+
+  100% {
+    -webkit-filter: hue-rotate(-360deg);
+  }
+}

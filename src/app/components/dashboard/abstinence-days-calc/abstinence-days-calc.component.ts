@@ -15,6 +15,8 @@ export class AbstinenceDaysCalcComponent implements OnInit, OnDestroy {
 
   @Output() saveMonth = new EventEmitter<MonthInterval>();
 
+  private NgbCalendarHebrew: any = new NgbCalendarHebrew();
+  private intervalsHistorySub: Subscription;
   onatHflagaDate: NgbDate | null = null;
   onatBenonitDate: NgbDate | null = null;
   onatHodeshDate: NgbDate | null = null;
@@ -23,11 +25,11 @@ export class AbstinenceDaysCalcComponent implements OnInit, OnDestroy {
 
   daysToHiglig: Array<NgbDateStruct> = new Array<NgbDateStruct>();
   highlightSingleDay: NgbDateStruct = null;
-  private NgbCalendarHebrew: any = new NgbCalendarHebrew();
+
+  constInterval: NgbDateStruct | undefined;
 
   lastSeen: PeriodDay = {isSeenNight: false, seenDay: this.calendar.getToday()};
   currentSeen: PeriodDay = {isSeenNight: false, seenDay: this.calendar.getToday()};
-  private intervalsHistorySub: Subscription;
   intervalsHistory: Array<MonthInterval> = [];
 
   constructor(private calendar: NgbCalendar,
@@ -38,20 +40,23 @@ export class AbstinenceDaysCalcComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-     this.intervalsHistorySub = this.auth.getUserIntervalsHistory().subscribe(
-      value => {
-        this.initDays(value);
-      }, error => {
-        console.error('Error! ', error);
-      },
-      () => {
-        this.onCurrentSeeDayChanged(this.currentSeen.seenDay);
-        this.onLastSeenDayChanged(this.lastSeen.seenDay);
+    console.log('on init');
+    this.intervalsHistorySub = this.auth.getUserIntervalsHistory()
+      .subscribe(
+        value => {
+          this.initDays(value);
+        }, error => {
+          console.error('Error! ', error);
+        },
+        () => {
+          this.onCurrentSeeDayChanged(this.currentSeen.seenDay);
+          this.onLastSeenDayChanged(this.lastSeen.seenDay);
 
-      });
+        });
 
 
   }
+
   ngOnDestroy(): void {
     this.intervalsHistorySub.unsubscribe();
   }
@@ -70,6 +75,11 @@ export class AbstinenceDaysCalcComponent implements OnInit, OnDestroy {
     // check if next month date exist
     if (!this.calendar.isValid(this.onatHodeshDate)) {
 
+    }
+    if (this.intervalsHistory.length) {
+      this.constInterval = this.hasConstInterval(currentSeeDate);
+      // this.isConstInterval = hasConst;
+      // this.constInterval = constIntervalDay;
     }
     // var {gregorian} =this.dayTemplateData(ngbDate)
     // const jsDate = new Date(gregorian.year, gregorian.month, 0);
@@ -112,10 +122,10 @@ export class AbstinenceDaysCalcComponent implements OnInit, OnDestroy {
     el.scrollIntoView({behavior: 'smooth'});
   }
 
-  saveDate($event) {
+  async saveDate($event) {
     this.loading = true;
     $event.stopPropagation();
-    const selectedMonth: MonthInterval = {
+    const selectedMonth: Partial<MonthInterval> = {
       lastSeenDay: {...this.lastSeen.seenDay},
       currentSeeDay: {...this.currentSeen.seenDay},
       haflagaInterval: {...this.onatHflagaDate},
@@ -126,16 +136,18 @@ export class AbstinenceDaysCalcComponent implements OnInit, OnDestroy {
       isCurrentSeenNight: this.currentSeen.isSeenNight
     } as MonthInterval;
 
+    // TODO find why addMonthForIntervalsHistory change the onatBenonitDate model
 
-    this.auth.addMonthForIntervalsHistory(selectedMonth).then(
+    await this.auth.addMonthForIntervalsHistory(selectedMonth, this.constInterval).then(
       value => {
         console.log('successfully add the month!');
-      }
-    ).finally(() => {
-      this.loading = false;
-      this.router.navigate(['diary'], {relativeTo: this.route.parent});
+      })
+      .catch(reason => console.error(reason))
+      .finally(() => {
+        this.loading = false;
+        this.router.navigate(['diary'], {relativeTo: this.route.parent});
 
-    });
+      });
 
 
     // this.saveMonth.emit(selectedMonth);
@@ -162,8 +174,17 @@ export class AbstinenceDaysCalcComponent implements OnInit, OnDestroy {
     if (this.intervalsHistory[0]) {
       this.lastSeen = {
         isSeenNight: this.intervalsHistory[0].isCurrentSeenNight,
-        seenDay: this.intervalsHistory[0].currentSeeDay
+        seenDay: NgbDate.from(this.intervalsHistory[0].currentSeeDay)
       };
+    }
+  }
+
+  private hasConstInterval(selectedDate: NgbDateStruct): NgbDateStruct {
+    const lastSeenDate: NgbDateStruct = selectedDate;
+    const prevSeenMonth: MonthInterval = this.intervalsHistory[0];
+    if (lastSeenDate.day === prevSeenMonth.currentSeeDay.day &&
+      lastSeenDate.day === prevSeenMonth.lastSeenDay.day) {
+      return lastSeenDate;
     }
   }
 }

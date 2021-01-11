@@ -42,6 +42,15 @@
 
         <h4>החששות לחודש הבא:</h4>
 
+        <div class="date-details border-danger" *ngIf="!!constInterval">
+          <div data-tooltip="ראיית כתם באותו יום 3 חודשים ברצף"
+               class="info-tooltip">
+            <div class="warning-color">שימי לב! נקבעה לך עונה קבועה</div>
+            {{ i18n.getDayNumerals(constInterval) }} לחודש
+            <div class="text-info small"> עונת יום ולילה</div>
+          </div>
+        </div>
+
         <div class="date-details">
           <div data-tooltip=" שלושים יום לאחר תחילת הווסת הקודמת, באותה עונה בה החלה הווסת הקודמת."
                class="info-tooltip">עונה בינונית: {{ i18n.getDayAriaLabel(onatBenonitDate) }}

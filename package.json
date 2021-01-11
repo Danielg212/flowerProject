@@ -31,6 +31,7 @@
     "@ng-bootstrap/ng-bootstrap": "^8.0.0",
     "bootstrap": "^4.4.1",
     "firebase": "^7.16.1",
+    "ng-animate": "^1.0.0",
     "rxjs": "~6.5.4",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

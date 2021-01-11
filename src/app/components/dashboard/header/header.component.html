@@ -8,7 +8,7 @@
     src="assets/svg/love.svg"
 
   />
-    <div class="aaa">
+    <div  [@bounceAnimation] class="aaa">
       <h3 class="pa-0 m-0">ימי טהרה</h3>
       <div> חישוב ימי פרישה 🌹</div>
     </div>
@@ -19,7 +19,7 @@
       <fa-icon [icon]="faBar" size="1x"></fa-icon>
     </div>
 
-    <img class="toggle" [src]="userModel.photoURL" alt="user Image" height="40" width="40">
+    <img class="toggle" *ngIf="userModel" [src]="userModel.photoURL" alt="user Image" height="40" width="40">
     <div>
       <a class="primary-color" [routerLink]="'.'" (click)="logout()">התנתקות</a>
     </div>

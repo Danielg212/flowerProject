@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import './assets/styles/fonts.scss';
 @import "./assets/styles/sidebar";
+@import "./assets/styles/animations";
+
 
 $gray: #8E9AAF;
 $lavender: #CBC0D3;
@@ -14,7 +16,7 @@ $white: #f6f6f6;
   color: #f06767;
 }
 .warning-bg-color{
-  background-color: #f06767;
+  background-color: #f06767 !important;
   color: #fff;
 }
 

@@ -1,13 +1,15 @@
 <div  @listAnimation *ngIf="item | async as monthData;">
-  <div *ngIf="monthData.data===undefined || !monthData.data.length  ;else other">
-    <div class="text-center"><h1>אין עונות שמורות ביומן</h1></div>
-  </div>
-  <ng-template #other>
+  <div *ngIf="monthData.data.length ;else other">
+    <h3 @bounceAnimation  *ngIf="!!monthData.constIntervalDate.day" class="card-subtitle text-center">עונה קבועה:
+      <span @bounceAnimation  class="warning-color"> כל {{ i18n.getDayNumerals(monthData.constIntervalDate) }} לחודש!</span>
+    </h3>
+
     <div class="card my-card" *ngFor="let interval of monthData.data">
       <div class="card-body">
-        <h5 class="card-title"> פרטים עבור יום ראיה: {{translatNGBDate(interval.currentSeeDay)}}
+        <h4 class="card-title"> פרטים עבור יום ראיה: {{translatNGBDate(interval.currentSeeDay)}}
           <span>- עונת {{getDayTimeStr(interval.isCurrentSeenNight)}} </span>
-        </h5>
+        </h4>
+
         <div class="flex-row">
           <div> עונת החודש {{translatNGBDate(interval.monthInterval)}}</div>
           <div> עונה בינונית {{translatNGBDate(interval.averageInterval)}} </div>
@@ -20,6 +22,9 @@
         </div>
       </div>
     </div>
+  </div>
+  <ng-template #other>
+    <div class="text-center animate-hue"><h1>אין עונות שמורות ביומן</h1></div>
   </ng-template>
 
 </div>

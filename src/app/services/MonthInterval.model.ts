@@ -1,8 +1,8 @@
-import {NgbDate} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDate, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
 export interface MonthInterval {
-  lastSeenDay: any;
-  currentSeeDay: any;
+  lastSeenDay: NgbDateStruct;
+  currentSeeDay: NgbDateStruct;
   haflagaInterval: any;
   averageInterval: any;
   monthInterval: any;
