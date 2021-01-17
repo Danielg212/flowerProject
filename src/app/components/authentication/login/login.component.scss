@@ -10,12 +10,10 @@ $pink: darken($pale, 20%);
 $sans-serif: 'Open Sans', sans-serif;
 $serif: 'Lora', serif;
 
-body {
-  background: $lavender;
-}
-
 /* div box styling */
 .container {
+  font-family: Heebo, sans-serif;
+  color: #51388c;
   margin: auto;
   width: 650px;
   height: 550px;
@@ -54,7 +52,7 @@ body {
   width: 320px;
   height: 500px;
   border-radius: 5px;
-  box-shadow: 2px 0 10px rgba(0,0,0,.1);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, .1);
   transition: all .5s ease-in-out;
   z-index: 2;
   @media (max-width: 768px) {
@@ -92,7 +90,6 @@ body {
 
 /* font & button styling */
 h1 {
-  font-family: $sans-serif;
   text-align: center;
   margin-top: 95px;
   text-transform: uppercase;
@@ -102,8 +99,6 @@ h1 {
 }
 
 .title {
-  font-family: $serif;
-  color: $pale;
   font-size: 2.8em;
   line-height: 1.1em;
   letter-spacing: 3px;
@@ -121,10 +116,8 @@ h1 {
 }
 
 p {
-  font-family: $sans-serif;
   font-size: .7em;
   letter-spacing: 2px;
-  color: $pale;
   text-align: center;
 }
 
@@ -136,8 +129,8 @@ p {
   left: 29%;
   opacity: .7;
   @media (max-width: 768px) {
-    &.smaller{
-      position:unset;
+    &.smaller {
+      position: unset;
       width: 50vw;
       height: 50vw;
       border-radius: 50%;
@@ -189,13 +182,12 @@ form {
 }
 
 input {
-  background: $pale;
-  width: 65%;
-  color: $pink;
+  width: 87%;
   border: none;
-  border-bottom: 1px solid rgba($white, 0.5);
+  border-bottom: 1px solid rgba(246, 246, 246, 0.5);
   padding: 9px;
   margin: 7px;
+  background: transparent;
 
   &::placeholder {
     color: rgba($white, 1);
@@ -241,6 +233,7 @@ input[type=checkbox] {
   color: $pink;
   transition: .5s all ease;
 }
+
 button {
   padding: 12px;
   text-transform: uppercase;
@@ -250,9 +243,10 @@ button {
   outline: none;
   display: block;
   color: #68037b;
+
   &:hover {
     background: $pale;
     color: $white;
-    transition: background-color 1s ease-out;
+    transition: background-color .800ms ease-out;
   }
 }

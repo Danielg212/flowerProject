@@ -21,7 +21,7 @@ export class AuthService {
   users$: Observable<any>;
   userData$: Observable<User | null>;
 
-  private userStore$: BehaviorSubject<User> = new BehaviorSubject<User| null>(null);
+  private userStore$: BehaviorSubject<User> = new BehaviorSubject<User | null>(null);
   user$ = this.userStore$.asObservable();
 
 
@@ -169,24 +169,26 @@ export class AuthService {
     const data = [intervalData];
     const newDatasetRef = this.afs
       .collection<any>(`intervalsHistory`)
-      .doc(`${this.userStore$.getValue().uid}`)
-      .update({
-        data: FieldValue.arrayUnion(...[intervalData]),
-        constIntervalDate: Object.assign({}, constInterval)
-      });
+      .doc(`${this.userStore$.getValue().uid}`);
+    // .set({
+    //   data: FieldValue.arrayUnion(...[intervalData]),
+    //   constIntervalDate: Object.assign({}, constInterval)
+    // });
 
-    return newDatasetRef;
+    // return newDatasetRef;
 
-    /*   return this.listOldIntervalsHistory()
-         .valueChanges()
-         .pipe(
-           take(1),
-           tap((oldData: any) => {
-             data.push(...oldData.intervalsHistory);
-             newDatasetRef.set({
-               data: FieldValue.arrayUnion(...data)
-             }, {merge: true});
-           })).toPromise();*/
+    return newDatasetRef.valueChanges()
+      .pipe(
+        take(1),
+        tap((oldData: any) => {
+          if (oldData) {
+            data.push(...oldData.data);
+          }
+          newDatasetRef.set({
+            data: FieldValue.arrayUnion(...data),
+            constIntervalDate: Object.assign({}, constInterval)
+          }, {merge: true});
+        })).toPromise();
 
 
     // this.listOldIntervalsHistory()
@@ -212,11 +214,13 @@ export class AuthService {
     const user = JSON.parse(localStorage.getItem('user')) as UserModel;
     return this.afs.collection<Array<MonthInterval>>('intervalsHistory').doc(this.userStore$.getValue().uid).valueChanges().pipe(
       map((value: any) => {
-        if (value.data) {
+        if (value?.data) {
           value.data
             .sort((a, b) => (b.currentSeeDay.year - a.currentSeeDay.year)
               || (b.currentSeeDay.month - a.currentSeeDay.month)
               || (b.currentSeeDay.day - a.currentSeeDay.day));
+        } else {
+          value = {data: []};
         }
         return value;
       })

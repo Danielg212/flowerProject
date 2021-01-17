@@ -24,6 +24,8 @@ import {TorahLessonsComponent} from './components/dashboard/torah-lessons/torah-
 import {VideoPlayerComponent} from './components/video-player/video-player.component';
 import {AngularFireMessagingModule} from '@angular/fire/messaging';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslocoRootModule } from './transloco/transloco-root.module';
 
 
 @NgModule({
@@ -53,7 +55,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     FontAwesomeModule,
     // AngularFireAnalyticsModule,
     AngularFirestoreModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
+    HttpClientModule,
+    TranslocoRootModule
   ],
   providers: [AngularFireAuthGuard,
     {provide: NgbCalendar, useClass: NgbCalendarHebrew},

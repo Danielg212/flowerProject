@@ -29,6 +29,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.13.0",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@ng-bootstrap/ng-bootstrap": "^8.0.0",
+    "@ngneat/transloco": "^2.20.0",
     "bootstrap": "^4.4.1",
     "firebase": "^7.16.1",
     "ng-animate": "^1.0.0",

@@ -5,10 +5,10 @@
 <main class="col-12 adjustable" role="main">
     <h3>
       <div *ngIf="userData">{{userData.displayName}},</div>
-      <div> ברוכה הבאה!</div>
+      <div>{{'welcome'|transloco}}</div>
     </h3>
   <div class="row">
-      <div class="col-md-10 col-12">
+      <div class="col-12">
         <router-outlet></router-outlet>
       </div>
     </div>

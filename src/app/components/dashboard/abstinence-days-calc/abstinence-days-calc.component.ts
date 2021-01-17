@@ -44,7 +44,9 @@ export class AbstinenceDaysCalcComponent implements OnInit, OnDestroy {
     this.intervalsHistorySub = this.auth.getUserIntervalsHistory()
       .subscribe(
         value => {
-          this.initDays(value);
+          if (value) {
+            this.initDays(value);
+          }
         }, error => {
           console.error('Error! ', error);
         },
@@ -53,6 +55,9 @@ export class AbstinenceDaysCalcComponent implements OnInit, OnDestroy {
           this.onLastSeenDayChanged(this.lastSeen.seenDay);
 
         });
+    // Todo to remove
+    this.onCurrentSeeDayChanged(this.currentSeen.seenDay);
+    this.onLastSeenDayChanged(this.lastSeen.seenDay);
 
 
   }

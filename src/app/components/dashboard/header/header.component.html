@@ -21,7 +21,7 @@
 
     <img class="toggle" *ngIf="userModel" [src]="userModel.photoURL" alt="user Image" height="40" width="40">
     <div>
-      <a class="primary-color" [routerLink]="'.'" (click)="logout()">התנתקות</a>
+      <a class="primary-color" [routerLink]="'.'" (click)="logout()">{{'logout'|transloco}}</a>
     </div>
 
   </div>
