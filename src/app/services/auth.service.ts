@@ -103,6 +103,27 @@ export class AuthService {
     }
   }
 
+  async registerUser(username: string, email: string, password: string) {
+    try {
+      const {user} = await this.afAuth.createUserWithEmailAndPassword(email, password);
+      await user.updateProfile({displayName: username});
+      this.userStore$.next(user);
+      await this.router.navigate(['dashboard']);
+    } catch (e) {
+      console.error(e.message);
+    }
+  }
+
+  async loginUser(email: string, password: string) {
+    try {
+      const {user} = await this.afAuth.signInWithEmailAndPassword(email, password);
+      this.userStore$.next(user);
+      await this.router.navigate(['dashboard']);
+    }catch (e) {
+      console.error(e.message);
+    }
+  }
+
   // Auth logic to run auth providers
   async AuthLogin(provider) {
     return await this.afAuth.setPersistence('local')

@@ -31,11 +31,22 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.titleService.setTitle(this.title);
-    this.metaService.addTags([
-      {name: 'keywords', content: 'חישוב,פרישה,וסת,מחשבון,טהרה,משפחה,סמוך לוסת'},
-      {name: 'description', content: 'המקום האישי שלך לטהרת המשפחה'},
-      {name: 'robots', content: 'index, follow'}
-    ]);
+    // not working proparly - adding tags after rendering
+    // this.metaService.addTags([
+    //   {property: 'og:site_name', content: 'טהרת הבית'},
+    //   {property: 'og:url', conten: 'https://media.giphy.com/media/h86PVmFNq6f2l3gMWI/source.gif'},
+    //   {property: 'og:title', content: 'Title of GIF page'},
+    //   {property: 'og:description', content: 'Some description'},
+    //   {property: 'og:type', content: 'video.other'},
+    //   {property: 'og:image', content: 'https://media.giphy.com/media/h86PVmFNq6f2l3gMWI/source.gif'},
+    //   {property: 'og:image:width', content: '800'},
+    //   {property: 'og:image:height', content: '400'},
+    //   {name: 'robots', content: 'index,follow'},
+    //   {property: 'og:title', content: 'טהרת הבית - חישוב ימי פרישה בקליק'},
+    //   {name: 'keywords', content: 'חישוב,פרישה,וסת,מחשבון,טהרה,משפחה,סמוך לוסת'},
+    //   {name: 'description', content: 'המקום האישי שלך לטהרת המשפחה'},
+    //   {name: 'robots', content: 'index, follow'}
+    // ]);
 
 
   }

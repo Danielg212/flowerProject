@@ -1,9 +1,10 @@
 $gray: #8E9AAF;
 $lavender: #CBC0D3;
-$pale: #EAC7CC;
 $white: #f6f6f6;
+$deep-blue: #04173b;
 
-$pink: darken($pale, 20%);
+
+$pink: darken($deep-blue, 50%);
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400|Lora');
 
@@ -13,7 +14,7 @@ $serif: 'Lora', serif;
 /* div box styling */
 .container {
   font-family: Heebo, sans-serif;
-  color: #51388c;
+  color: #fff;
   margin: auto;
   width: 650px;
   height: 550px;
@@ -45,8 +46,6 @@ $serif: 'Lora', serif;
   position: absolute;
   top: -10%;
   left: 5%;
-  background-color: #7367f0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 800 400'%3E%3Cdefs%3E%3CradialGradient id='a' cx='396' cy='281' r='514' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23f029a7'/%3E%3Cstop offset='1' stop-color='%237367f0'/%3E%3C/radialGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='400' y1='148' x2='400' y2='333'%3E%3Cstop offset='0' stop-color='%23ffc83d' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23ffc83d' stop-opacity='0.5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23a)' width='800' height='400'/%3E%3Cg fill-opacity='0.4'%3E%3Ccircle fill='url(%23b)' cx='267.5' cy='61' r='300'/%3E%3Ccircle fill='url(%23b)' cx='532.5' cy='61' r='300'/%3E%3Ccircle fill='url(%23b)' cx='400' cy='30' r='300'/%3E%3C/g%3E%3C/svg%3E");
   background-position: center;
   background-size: cover;
   width: 320px;
@@ -55,6 +54,16 @@ $serif: 'Lora', serif;
   box-shadow: 2px 0 10px rgba(0, 0, 0, .1);
   transition: all .5s ease-in-out;
   z-index: 2;
+  background: rgb(29,92,253);
+  background: linear-gradient(45deg, rgba(29,92,253,1) 0%, rgba(130,101,255,1) 100%);
+
+  background: rgb(29,92,253);
+  background: linear-gradient(45deg, rgba(29,92,253,1) 0%, rgba(56,125,254,1) 17%, rgba(112,101,255,1) 52%, rgba(111,81,254,1) 96%);
+
+  a{
+    color: #ffffff;
+  }
+
   @media (max-width: 768px) {
     text-align: center;
     padding: 20px;
@@ -75,6 +84,7 @@ $serif: 'Lora', serif;
 }
 
 .leftbox, .rightbox {
+  color: #51388c;
   position: absolute;
   width: 50%;
   transition: 1s all ease;
@@ -104,6 +114,10 @@ h1 {
   letter-spacing: 3px;
   text-align: center;
   font-weight: 300;
+
+  @media (max-width: 768px) {
+    color: #fff;
+  }
 }
 
 .desc {
@@ -111,7 +125,7 @@ h1 {
 }
 
 .account {
-  margin-top: 45%;
+  margin-top: 55%;
   font-size: 10px;
 }
 
@@ -126,7 +140,7 @@ p {
   width: 120px;
   height: 120px;
   top: 46%;
-  left: 29%;
+  left: 32%;
   opacity: .7;
   @media (max-width: 768px) {
     &.smaller {
@@ -160,24 +174,29 @@ form {
 
 .more-padding {
   padding-top: 20px;
+  padding-bottom: 5px;
 
   input {
     padding: 12px;
   }
 
   .submit {
-    margin-top: 45px;
+    margin-top: 15px;
+  }
+
+  .footer{
+    width: 87%;
+
   }
 }
 
 .submit {
-  margin-top: 25px;
+  margin-top: 10px;
   padding: 12px;
-  border-color: $pink;
 
   &:hover {
-    background: $lavender;
-    border-color: darken($lavender, 5%);
+    background: $deep-blue;
+    color: #ffffff;
   }
 }
 
@@ -197,9 +216,9 @@ input {
   }
 
   &:focus {
-    color: $pink;
+    color: white;
     outline: none;
-    border-bottom: 1.2px solid rgba($pink, 0.7);
+    border-bottom: 1.2px solid rgba($white, 1);
     font-size: 1em;
     transition: .8s all ease;
 
@@ -228,6 +247,9 @@ input[type=checkbox] {
   width: 7px;
   background: $pink;
 }
+input{
+  color: #fff;
+}
 
 .checkbox input[type="checkbox"]:checked + label {
   color: $pink;
@@ -242,10 +264,10 @@ button {
   margin: auto;
   outline: none;
   display: block;
-  color: #68037b;
+  color: $deep-blue;
 
   &:hover {
-    background: $pale;
+    background: $deep-blue;
     color: $white;
     transition: background-color .800ms ease-out;
   }

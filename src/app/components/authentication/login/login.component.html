@@ -15,50 +15,68 @@
 
 <div class="container">
   <div class="welcome">
-    <div class="pinkbox" [style]="signin?'transform:translateX(80%);':'transform:translateX(0);'">
+    <div class="pinkbox" [style]="signin && !isMobile?'transform:translateX(80%);':'transform:translateX(0);'">
       <div class="signup" [class.nodisplay]="!signin">
         <h1>הרשמי</h1>
-        <form autocomplete="off">
-          <input type="text" placeholder="שם">
-          <input type="email" placeholder="אימייל">
-          <input type="password" placeholder="סיסמא">
-          <input type="password" placeholder="אשרי סיסמא">
-          <button class="button submit">צרי חשבון</button>
+        <form autocomplete="off" [formGroup]="registerForm">
+          <input type="text" formControlName="name" placeholder="שם (גם כינוי זה בסדר...)">
+          <div *ngIf="submitted && f.name.errors">
+            <div *ngIf="f.name.errors.required">שדה חובה - גם כינוי זה בסדר :)</div>
+          </div>
+          <input type="email" formControlName="email" placeholder="אימייל">
+          <div *ngIf="submitted && f.email.errors">
+            <div *ngIf="f.email.errors.required">שדה חובה</div>
+          </div>
+          <input type="password" formControlName="password" placeholder="סיסמה">
+          <div *ngIf="submitted && f.password.errors">
+            <div *ngIf="f.password.errors.minlength">הסיסמה צריכה להיות מינימום 6 תווים</div>
+            <div *ngIf="f.password.errors.required">שדה חובה</div>
+          </div>
+          <a class="d-block d-md-none" href="#" (click)="toggleSignInMethod($event)">התחברות</a>
+          <button (click)="createUser()" class="button submit">צרי חשבון</button>
         </form>
       </div>
       <div class="signin" [class.nodisplay]="signin">
         <div class="d-md-none d-block text-center text-white">
-          <img class="flower smaller" src="assets/images/flower.jpg" alt="1357d638624297b"
+          <img class="flower smaller" src="assets/images/flower2.jpg" alt="flower-app"
                border="10">
           <h2 class="title">טהרה</h2>
           <p class="desc"> המקום האישי <span>שלך</span></p>
         </div>
         <h1 class="d-none d-md-block">התחברי</h1>
-        <form class="more-padding" autocomplete="off">
-          <!--          <input type="text" placeholder="username">-->
-          <!--          <input type="password" placeholder="password">-->
-          <!--          <div class="checkbox">-->
-          <!--            <input type="checkbox" id="remember" /><label for="remember">remember me</label>-->
-          <!--          </div>-->
 
+        <form class="more-padding" autocomplete="off" [formGroup]="loginForm">
+          <input type="email" formControlName="email" placeholder="מייל">
+          <input type="password" formControlName="password" placeholder="סיסמה">
+          <div class="d-flex justify-content-between footer">
+          <a class="font-weight-lighter " href="#">שכחתי סיסמה</a>
+            <a class="d-block d-md-none" href="#" (click)="toggleSignInMethod($event)">הרשמה</a>
+          </div>
+
+          <button (click)="loginWithEmail()" class="btn button btn-secondary submit">התחברות</button>
+        </form>
+
+        <div class="other-method text-center">
+          <div>או באמצעות</div>
           <button class="button submit btn-lg mt-0" (click)="login()">
-            Google login
+            Gmail account
             <fa-icon [icon]="faGoogle"></fa-icon>
           </button>
-        </form>
+          <button class="pt-3 btn btn-xs bg-white submit" (click)="addToHomeScreen()" *ngIf="showButton">הורדה כאפליקציה</button>
+        </div>
       </div>
     </div>
     <div class="leftbox d-none d-sm-block ">
       <h2 class="title"> טהרת <br>הבית</h2>
       <p class="desc"> המקום האישי <span>שלך</span></p>
-      <img class="flower" src="assets/images/flower.jpg"/>
-      <p class="account">יש לך כבר חשבון</p>
+      <img class="flower" src="assets/images/flower2.jpg"/>
+      <p class="account">יש לך כבר חשבון?</p>
       <button class="button" id="signin" (click)="signin = !signin">התחברי</button>
     </div>
     <div class="rightbox  d-none d-sm-block">
       <h2 class="title"><span>טהרת</span><br>הבית</h2>
       <p class="desc"> המקום האישי <span>שלך</span></p>
-      <img class="flower smaller" src="assets/images/flower.jpg" alt="1357d638624297b"
+      <img class="flower smaller" src="assets/images/flower2.jpg" alt="1357d638624297b"
            border="0">
 <!--      todo - future registration for all mails-->
       <p class="account">אין לך עדיין חשבון?</p>
